@@ -1,0 +1,163 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Judd Gurtman</title>
+  <meta name="description" content="Judd Gurtman builds AI systems that have to hold up on messy, real-world data. University of Michigan, Information Analysis '27.">
+  <meta property="og:title" content="Judd Gurtman">
+  <meta property="og:description" content="AI systems that hold up on messy, real-world data. A year of shipping in public, every number measured.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://juddgurtman.com/">
+  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <a class="skip" href="#work">Skip to work</a>
+
+  <header class="nav">
+    <a class="brand" href="#top" aria-label="Judd Gurtman, home"><span class="mark">JG</span>Judd Gurtman</a>
+    <nav aria-label="Sections">
+      <a href="#work">Work</a>
+      <a href="#fun">For fun</a>
+      <a href="#how">How I work</a>
+      <a href="#about">About</a>
+    </nav>
+  </header>
+
+  <main id="top">
+    <section class="hero">
+      <p class="eyebrow">Information Analysis · University of Michigan '27</p>
+      <h1>I build AI systems that have to hold up on <span class="hl">messy, real-world data</span>.</h1>
+      <p class="lede">I'm spending a year building AI projects in public and shipping one a month. Every number on this page came from a measured run.</p>
+      <div class="cta">
+        <a class="btn primary" href="#work">See the work</a>
+        <a class="btn" href="https://github.com/juddg-commits/year-of-ai">GitHub</a>
+        <a class="btn" href="https://www.linkedin.com/in/judd-gurtman-208769235/">LinkedIn</a>
+      </div>
+
+      <aside class="now" aria-label="What I'm working on now">
+        <p class="now-label"><span class="dot" aria-hidden="true"></span>Now · September 2026</p>
+        <p>Building a small fleet of AI agents run by one orchestrator. Just shipped a research agent that cites every claim. Next: an agent that triages incoming requests and drafts replies for a person to approve.</p>
+      </aside>
+    </section>
+
+    <section id="work" class="section">
+      <div class="section-head">
+        <h2>AI projects</h2>
+        <p>The Year of AI: one shipped project a month, each with a write-up of what broke.</p>
+      </div>
+
+      <article class="card feature">
+        <div class="card-top">
+          <h3>Research agent</h3>
+          <p class="tags">Python · Claude API · web search · citations</p>
+        </div>
+        <p>Ask it a hard question and it breaks the question into smaller ones, researches them in parallel, checks every claim against the exact quote it came from, and writes a short brief where every claim has to cite its source.</p>
+        <ul class="metrics">
+          <li><strong>64% → 41%</strong><span>weakly supported claims, after measuring why they were weak before fixing anything</span></li>
+          <li><strong>45 / 46</strong><span>sentences cited, 0 invented sources</span></li>
+          <li><strong>$1.68 → $1.25</strong><span>per question, from a per-step cost ledger</span></li>
+        </ul>
+        <p class="links"><a href="https://github.com/juddg-commits/year-of-ai/blob/main/apps/research-agent/WRITEUP.md">What broke →</a><a href="https://github.com/juddg-commits/year-of-ai/blob/main/apps/research-agent/DESIGN.md">Design notes →</a><a href="https://github.com/juddg-commits/year-of-ai/tree/main/apps/research-agent">Code →</a></p>
+      </article>
+
+      <div class="grid two">
+        <article class="card">
+          <div class="card-top">
+            <h3>Agent fleet</h3>
+            <p class="tags">MCP · orchestration</p>
+          </div>
+          <p>One orchestrator agent that runs my other agents as tools, through an MCP server. Anything that spends money has a cap and waits for a person to approve it, and a stuck job gets shut down so it stops costing money.</p>
+          <p class="links"><a href="https://github.com/juddg-commits/year-of-ai/tree/main/apps/fleet-mcp">Code →</a></p>
+        </article>
+
+        <article class="card">
+          <div class="card-top">
+            <h3>Coach</h3>
+            <p class="tags">FastAPI · tool use · PWA</p>
+          </div>
+          <p>An AI personal trainer web app that takes real actions: it logs workouts, meals, weigh-ins and plans through 7 tools and builds each week from what you actually did. Two QA passes found and fixed 25 bugs.</p>
+          <p class="links"><a href="https://github.com/juddg-commits/year-of-ai/tree/main/apps/health-coach">Code →</a></p>
+        </article>
+      </div>
+
+      <div class="section-head sub">
+        <h2>Data projects</h2>
+      </div>
+      <div class="grid two">
+        <article class="card">
+          <div class="card-top">
+            <h3>Fuel price volatility</h3>
+            <p class="tags">Python · pandas · EIA data</p>
+          </div>
+          <p>30+ years of weekly U.S. gasoline and diesel prices (26,000+ observations): how volatile they are, how regional prices drift apart, and which shocks drove the biggest swings.</p>
+          <p class="links"><a href="https://github.com/juddg-commits/fuel-price-volatility">Code →</a></p>
+        </article>
+        <article class="card">
+          <div class="card-top">
+            <h3>Movie ratings</h3>
+            <p class="tags">Python · APIs · SQLite</p>
+          </div>
+          <p>A pipeline that pulls film data from the TMDB and OMDb APIs into SQLite, then looks at how ratings and box office vary by genre.</p>
+          <p class="links"><a href="https://github.com/juddg-commits/movie-ratings-analysis">Code →</a></p>
+        </article>
+      </div>
+    </section>
+
+    <section id="fun" class="section">
+      <div class="section-head">
+        <h2>For fun</h2>
+        <p>Things I build because I want them to exist.</p>
+      </div>
+      <article class="card game">
+        <div class="shots">
+          <img src="assets/clout-royale-hub.jpg" alt="Clout Royale home base: a pixel-art mansion with upgrade stations" loading="lazy" width="1000" height="586">
+          <img src="assets/clout-royale-fight.jpg" alt="Clout Royale mission: top-down arena fight against parody creator characters" loading="lazy" width="1000" height="586">
+        </div>
+        <div class="game-body">
+          <div class="card-top">
+            <h3>Clout Royale</h3>
+            <p class="tags">TypeScript · Phaser 3</p>
+          </div>
+          <p>A satirical top-down arena game about the creator economy. You play a gym influencer defending your mansion from waves of parody creators. Eliminations earn clout, your Aura meter powers your abilities, and your Cringe meter slows you down when you overdo it.</p>
+          <p class="soon">Playable link coming soon.</p>
+        </div>
+      </article>
+    </section>
+
+    <section id="how" class="section">
+      <div class="section-head">
+        <h2>How I work</h2>
+      </div>
+      <ol class="principles">
+        <li><h3>Measure before fixing.</h3><p>My research agent's obvious fix was aimed at the wrong cause. Counting first showed the real one.</p></li>
+        <li><h3>Only claim what I measured.</h3><p>Every number here traces back to a run, a trace file or a controlled replay.</p></li>
+        <li><h3>A person approves anything risky.</h3><p>If an agent is about to spend money or talk to someone, it waits for a human.</p></li>
+      </ol>
+    </section>
+
+    <section id="about" class="section about">
+      <div class="section-head">
+        <h2>About</h2>
+      </div>
+      <div class="about-body">
+        <p>I'm a senior at the University of Michigan studying Information Analysis with a minor in Economics, graduating in May 2027. I like the part of analytics where the data is messier than the dashboard suggests, and I've spent this year learning to build AI that holds up there.</p>
+        <p>Outside of class I coach youth flag football on Wednesdays, ski whenever I can, and follow sports analytics a little too closely.</p>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-links">
+      <a href="mailto:judd@juddgurtman.com">judd@juddgurtman.com</a>
+      <a href="https://www.linkedin.com/in/judd-gurtman-208769235/">LinkedIn</a>
+      <a href="https://github.com/juddg-commits">GitHub</a>
+    </div>
+    <p>© 2026 Judd Gurtman</p>
+  </footer>
+</body>
+</html>
