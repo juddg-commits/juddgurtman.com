@@ -79,6 +79,11 @@ main, .footer { max-width: var(--max); margin: 0 auto; padding: 0 24px; }
 
 /* Hero */
 .hero { padding: 72px 0 40px; }
+.hero-grid { display: grid; grid-template-columns: 1fr 280px; gap: 56px; align-items: center; }
+.portrait {
+  width: 100%; aspect-ratio: 1; object-fit: cover; border-radius: 22px;
+  border: 1px solid var(--border); box-shadow: 10px 10px 0 var(--maize), var(--shadow);
+}
 .eyebrow {
   font: 500 13px/1.4 "JetBrains Mono", ui-monospace, monospace;
   letter-spacing: 0.02em; color: var(--muted); margin: 0 0 18px;
@@ -172,6 +177,8 @@ h3 { font-size: 19px; letter-spacing: -0.01em; margin: 0; }
   .nav nav { display: none; }
   main, .footer { padding-left: 16px; padding-right: 16px; }
   .hero { padding-top: 40px; }
+  .hero-grid { grid-template-columns: 1fr; gap: 24px; }
+  .portrait { order: -1; width: 112px; border-radius: 50%; box-shadow: 0 0 0 3px var(--maize); }
   .lede { font-size: 17px; }
   .metrics, .grid.two, .principles, .game { grid-template-columns: 1fr; }
   .card { padding: 20px; }
