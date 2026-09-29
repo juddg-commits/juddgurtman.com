@@ -1,1 +1,7 @@
 .DS_Store
+# Judd Bot: the API key, dependencies and eval runs never go in the repo (GitHub Pages publishes it all).
+.env
+bot/.env
+node_modules/
+bot/runs/
+bot/private-checks.json

@@ -1,0 +1,14 @@
+{
+  "name": "judd-bot",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "test": "node --test",
+    "ask": "node --env-file=.env ask.js",
+    "eval": "node --env-file=.env eval.js"
+  },
+  "dependencies": {
+    "@anthropic-ai/sdk": "^0.129.0",
+    "zod": "^4.6.5"
+  }
+}
