@@ -5,3 +5,5 @@ bot/.env
 node_modules/
 bot/runs/
 bot/private-checks.json
+bot/.dev.vars
+bot/.wrangler/

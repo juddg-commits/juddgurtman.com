@@ -6,7 +6,7 @@
   <title>Judd Gurtman</title>
   <meta name="description" content="Judd Gurtman builds AI systems that have to hold up on messy, real-world data. University of Michigan, Information Analysis '27.">
   <meta property="og:title" content="Judd Gurtman">
-  <meta property="og:description" content="AI systems that hold up on messy, real-world data. A year of shipping in public, every number measured.">
+  <meta property="og:description" content="AI systems that hold up on messy, real-world data. A year of shipping AI in public, with measured results.">
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://juddgurtman.com/">
   <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
@@ -26,6 +26,7 @@
       <a href="#fun">For fun</a>
       <a href="#how">How I work</a>
       <a href="#about">About</a>
+      <a href="#ask" data-bot hidden>Ask Judd Bot</a>
     </nav>
   </header>
 
@@ -35,7 +36,7 @@
         <div class="hero-text">
           <p class="eyebrow">Information Analysis · University of Michigan '27</p>
           <h1>I check what a number is <span class="hl">actually counting</span> before I trust it.</h1>
-          <p class="lede">I build AI systems and ship them in public: two since August, each with a write-up and measured results, on the way to 8–12 by next summer. Every number on this page came from a measured run.</p>
+          <p class="lede">I build AI systems and ship them in public: two so far, each with a write-up and measured results. Every result in my AI projects came from a measured run.</p>
           <div class="cta">
             <a class="btn primary" href="#work">See the work</a>
             <a class="btn" href="https://github.com/juddg-commits/year-of-ai">GitHub</a>
@@ -51,10 +52,33 @@
       </aside>
     </section>
 
+    <!-- Judd Bot: hidden until the script below runs, so there's no dead box without JavaScript. -->
+    <section id="ask" class="section ask" data-bot hidden>
+      <div class="card">
+        <div class="card-top">
+          <h2>Ask Judd Bot</h2>
+          <p class="tags">Claude Sonnet 5 · public facts only</p>
+        </div>
+        <p>It answers questions about me from a <a href="https://github.com/juddg-commits/juddgurtman.com/blob/main/bot/facts.md">public facts file</a> and links a source for every answer. If the facts don't cover it, it says so.</p>
+        <form class="ask-form" id="ask-form">
+          <label class="sr-only" for="ask-q">Your question</label>
+          <input id="ask-q" type="text" maxlength="500" autocomplete="off" placeholder="What has Judd built?" required>
+          <button class="btn primary" type="submit">Ask</button>
+        </form>
+        <div class="ask-try">
+          <button type="button" class="chip">What has Judd built?</button>
+          <button type="button" class="chip">How does he test his AI?</button>
+          <button type="button" class="chip">Tell me about his internship</button>
+        </div>
+        <div class="ask-out" id="ask-out" aria-live="polite"></div>
+        <p class="ask-note">Questions are logged so I can improve the bot. Please don't include personal information.</p>
+      </div>
+    </section>
+
     <section id="work" class="section">
       <div class="section-head">
         <h2>AI projects</h2>
-        <p>The Year of AI: one shipped project a month, each with a write-up of what broke.</p>
+        <p>The Year of AI: one project at a time, shipped in public, each with a write-up of what broke.</p>
       </div>
 
       <article class="card feature">
@@ -163,7 +187,7 @@
       </div>
       <ol class="principles">
         <li><h3>Measure before fixing.</h3><p>My research agent's obvious fix was aimed at the wrong cause. Counting first showed the real one.</p></li>
-        <li><h3>Only claim what I measured.</h3><p>Every number here traces back to a run, a trace file or a controlled replay.</p></li>
+        <li><h3>Only claim what I measured.</h3><p>Every AI result here traces back to a run, a trace file or a controlled replay.</p></li>
         <li><h3>A person approves anything risky.</h3><p>If an agent is about to spend money or talk to someone, it waits for a human.</p></li>
       </ol>
     </section>
@@ -187,5 +211,73 @@
     </div>
     <p>© 2026 Judd Gurtman</p>
   </footer>
+
+  <script>
+    // Judd Bot: sends the question to the Worker (bot/worker.js) and shows the answer with its sources.
+    (() => {
+      const HOST = location.hostname === "localhost" ? "http://127.0.0.1:8787" : "https://bot.juddgurtman.com";
+      const BOT = `${HOST}/ask`;
+      const UNREACHABLE = "Judd Bot can't be reached right now. You can ask Judd at judd@juddgurtman.com.";
+      const form = document.getElementById("ask-form");
+      const input = document.getElementById("ask-q");
+      const button = form.querySelector("button");
+      const out = document.getElementById("ask-out");
+
+      // Show the box only when the Worker answers its free health check, so it never sits there dead.
+      fetch(`${HOST}/health`)
+        .then((res) => res.ok && document.querySelectorAll("[data-bot]").forEach((el) => { el.hidden = false; }))
+        .catch(() => {});
+
+      // "juddgurtman.com/#experience" -> "This page: experience"; GitHub paths -> their last two parts.
+      const label = (url) => {
+        const u = new URL(url);
+        if (u.hostname === "juddgurtman.com") return u.hash ? `This page: ${u.hash.slice(1)}` : "This page";
+        return u.pathname.split("/").filter(Boolean).slice(-2).join("/") || u.hostname;
+      };
+      const line = (cls, text) => Object.assign(document.createElement("p"), { className: cls, textContent: text });
+
+      function show(question, answer, sources = []) {
+        out.replaceChildren(line("ask-q", question), line("ask-a", answer));
+        const links = sources.filter((s) => /^https:\/\//.test(s));
+        if (!links.length) return;
+        const list = document.createElement("ul");
+        list.className = "ask-sources";
+        for (const s of links) {
+          const li = document.createElement("li");
+          li.append(Object.assign(document.createElement("a"), { href: s, textContent: label(s) }));
+          list.append(li);
+        }
+        out.append(line("ask-sources-label", "Sources"), list);
+      }
+
+      async function ask(question) {
+        button.disabled = true;
+        show(question, "Thinking…");
+        const stop = new AbortController();
+        const timer = setTimeout(() => stop.abort(), 30000);
+        try {
+          const res = await fetch(BOT, { method: "POST", headers: { "Content-Type": "application/json" },
+                                         body: JSON.stringify({ question }), signal: stop.signal });
+          const data = await res.json();
+          show(question, data.answer || UNREACHABLE, data.sources);
+        } catch {
+          show(question, UNREACHABLE);
+        } finally {
+          clearTimeout(timer);
+          button.disabled = false;
+        }
+      }
+
+      form.addEventListener("submit", (e) => {
+        e.preventDefault();
+        const question = input.value.trim();
+        if (question) ask(question);
+      });
+      document.querySelectorAll(".ask-try .chip").forEach((chip) => chip.addEventListener("click", () => {
+        input.value = chip.textContent;
+        ask(chip.textContent);
+      }));
+    })();
+  </script>
 </body>
 </html>

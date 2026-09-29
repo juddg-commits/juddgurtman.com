@@ -17,7 +17,7 @@ python3 -m http.server 8765    # then open http://127.0.0.1:8765
 5. **Email:** Cloudflare → Email Routing → forward `judd@juddgurtman.com` to your Gmail. The footer already uses that address.
 
 ## Rules
-- Every number on the site comes from a measured run (same rule as the Year of AI repo).
+- Every AI result on the site comes from a measured run (same rule as the Year of AI repo).
 - Nothing about jobs or internships here; that lives on the resume and LinkedIn only.
 - Resume PDF (when added) has no phone number.
 

@@ -19,4 +19,15 @@ npm run ask -- "what has Judd built?"      # one question, about a cent
 npm run eval                               # the trick-question eval, paid
 ```
 
-`eval.js` asks 34 questions: ones the facts answer, private topics, company numbers I don't share, and prompt-injection attempts. Every check is code (the kind of answer, the fact IDs, strings that must never appear), so a run is repeatable and free to re-read. Each run saves its answers to `runs/`.
+`eval.js` asks 43 questions: ones the facts answer, private topics, company numbers I don't share, questions about other people, and prompt-injection attempts. Every check is code (the kind of answer, the fact IDs, strings that must never appear), so a run is repeatable and free to re-read. Each run saves its answers to `runs/`.
+
+## On the site
+
+The page's "Ask Judd Bot" box calls a Cloudflare Worker at `bot.juddgurtman.com/ask` ([worker.js](worker.js), [handle.js](handle.js)), which holds the API key as a secret. It answers only requests from juddgurtman.com, allows 6 questions a minute per visitor and 60 overall, and returns just the answer and its sources. The box stays hidden until the Worker answers a free `/health` check, so a down Worker never leaves a dead box on the page. The key's monthly spend limit in the Anthropic console is the hard ceiling on cost. Every question, its cost, and the reason for any failed call go to the Worker's logs.
+
+```bash
+npx wrangler@4 login                          # once
+npx wrangler@4 secret put ANTHROPIC_API_KEY   # once
+npx wrangler@4 deploy
+npx wrangler@4 tail                           # watch questions live
+```

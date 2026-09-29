@@ -1,0 +1,31 @@
+# Judd Bot's API on Cloudflare Workers: POST https://bot.juddgurtman.com/ask
+#   npx wrangler@4 login                              # once
+#   npx wrangler@4 secret put ANTHROPIC_API_KEY       # once: the "judd-bot" key
+#   npx wrangler@4 deploy
+name = "judd-bot"
+main = "worker.js"
+compatibility_date = "2026-09-01"
+compatibility_flags = ["nodejs_compat"]
+routes = [{ pattern = "bot.juddgurtman.com", custom_domain = true }]
+
+# facts.md is bundled into the Worker as text.
+[[rules]]
+type = "Text"
+globs = ["**/*.md"]
+fallthrough = true
+
+# One visitor gets 6 questions a minute, everyone together 60. The "judd-bot" key's
+# monthly spend limit in the Anthropic console is the hard ceiling on the bill.
+[[ratelimits]]
+name = "PER_VISITOR"
+namespace_id = "1001"
+simple = { limit = 6, period = 60 }
+
+[[ratelimits]]
+name = "EVERYONE"
+namespace_id = "1002"
+simple = { limit = 60, period = 60 }
+
+# Keeps the logs: every question, what it cost, and why any call failed.
+[observability]
+enabled = true
