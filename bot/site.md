@@ -106,7 +106,7 @@ For fun
 TypeScript · Phaser 3
 Clout Royale
 A satirical top-down arena game about the creator economy. You play a gym influencer defending your mansion from waves of parody creators. Eliminations earn clout, your Aura meter powers your abilities, and your Cringe meter slows you down when you overdo it.
-Play it in your browser ↗ Code ↗
+Play it in your browser (keyboard needed) ↗ Code ↗
 Desktop only: keyboard and mouse.
 
 ### P3 | https://juddgurtman.com/work/coach/ | Coach case study
