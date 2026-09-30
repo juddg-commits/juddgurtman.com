@@ -1,0 +1,16 @@
+---
+// A case study's body: the text on the left, an "On this page" list that stays in view on the right.
+interface Props { toc: { id: string; label: string }[] }
+const { toc } = Astro.props;
+---
+<div class="lg:grid lg:grid-cols-[minmax(0,1fr)_220px] lg:gap-16 xl:grid-cols-[minmax(0,1fr)_250px]">
+  <div class="min-w-0"><slot /></div>
+  <aside class="hidden lg:block">
+    <nav aria-label="On this page" class="sticky top-24 mt-14 border-l border-line pl-5 text-[14px]">
+      <p class="mb-2 font-medium text-ink">On this page</p>
+      <ul class="space-y-1.5">
+        {toc.map((t) => <li><a href={`#${t.id}`} class="text-muted no-underline hover:text-ink">{t.label}</a></li>)}
+      </ul>
+    </nav>
+  </aside>
+</div>

@@ -1,0 +1,30 @@
+---
+// The top of a case study: title, one-line pitch, facts, and links.
+interface Props {
+  title: string;
+  pitch: string;
+  facts: { label: string; value: string }[];
+  links: { label: string; href: string }[];
+}
+const { title, pitch, facts, links } = Astro.props;
+---
+<header class="border-b border-line pb-10 pt-12 md:pt-16">
+  <p class="mb-4 text-[14.5px]"><a href="/work/" class="text-muted no-underline hover:text-ink">← All work</a></p>
+  <div class="grid gap-10 md:grid-cols-[7fr_4fr] md:gap-16">
+    <div>
+      <h1 class="mb-5 text-[36px] font-semibold leading-[1.1] tracking-[-0.025em] md:text-[44px]">{title}</h1>
+      <p class="max-w-[56ch] text-[18px] leading-relaxed">{pitch}</p>
+      <p class="mt-6 flex flex-wrap gap-x-5 gap-y-2 text-[15px]">
+        {links.map((l) => <a href={l.href} class="link-accent">{l.label} ↗</a>)}
+      </p>
+    </div>
+    <dl class="self-start border-t-2 border-ink text-[14.5px]">
+      {facts.map((f) => (
+        <div class="grid grid-cols-[120px_1fr] gap-3 border-b border-line py-2.5">
+          <dt class="text-muted">{f.label}</dt>
+          <dd class="text-ink">{f.value}</dd>
+        </div>
+      ))}
+    </dl>
+  </div>
+</header>

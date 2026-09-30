@@ -1,0 +1,107 @@
+---
+import Base from "../../layouts/Base.astro";
+import StudyHeader from "../../components/StudyHeader.astro";
+import Flow from "../../components/Flow.astro";
+import NextStudy from "../../components/NextStudy.astro";
+import StudyBody from "../../components/StudyBody.astro";
+
+const app = "https://github.com/juddg-commits/year-of-ai/blob/main/apps/research-agent";
+const steps = [
+  { name: "Plan", who: "Opus 5, structured output", text: "Breaks the question into 2 to 4 sub-questions. Each one has to stand alone, because each worker only ever sees its own." },
+  { name: "Research", who: "Sonnet 5, one worker each, in parallel", text: "Each worker runs up to 3 web searches and writes cited prose. Code turns every citation into an evidence record: claim, quote, URL." },
+  { name: "Recover quotes", who: "Plain code, no tokens", text: "The API cuts quotes off at about 150 characters. Code downloads the source page, finds the quote and completes its sentence." },
+  { name: "Validate", who: "Opus 5, parallel batches", text: "A separate model checks each claim against its quote: supported, partial or unsupported. Unsupported claims are dropped." },
+  { name: "Fit context", who: "Code, and a cheaper model if needed", text: "The writer sees compact notes, never raw pages. Notes that run over budget are condensed per sub-question and keep their sources." },
+  { name: "Write and audit", who: "Opus 5, then code", text: "A structured brief with [S#] citations. Code strips citations to sources that don't exist and counts uncited sentences." },
+];
+---
+<Base title="Research agent" description="A research agent that splits a hard question, researches the parts in parallel, checks every claim against its quote, and cites every sentence. What broke and the measured results.">
+  <div class="container-page">
+    <StudyHeader
+      title="Research agent"
+      pitch="Ask it a hard question and get back a short brief where every sentence cites a source. It splits the question up, researches the parts in parallel, and checks every claim against the exact quote it came from before anything reaches the brief."
+      facts={[
+        { label: "Shipped", value: "September 2026" },
+        { label: "Stack", value: "Python, Claude API (Opus 5 and Sonnet 5), web search" },
+        { label: "Per question", value: "About $1.25 and 2 to 3 minutes" },
+        { label: "Built with", value: "Claude Code as my pair programmer" },
+      ]}
+      links={[
+        { label: "Code", href: "https://github.com/juddg-commits/year-of-ai/tree/main/apps/research-agent" },
+        { label: "Design notes", href: `${app}/DESIGN.md` },
+        { label: "Write-up", href: `${app}/WRITEUP.md` },
+      ]}
+    />
+
+    <StudyBody toc={[{ id: "the-results", label: "The results" }, { id: "how-it-works", label: "How it works" }, { id: "what-comes-out", label: "What comes out" }, { id: "what-broke", label: "What broke" }, { id: "how-it-avoids-making-things-up", label: "How it avoids making things up" }, { id: "known-issues", label: "Known issues" }, { id: "how-i-built-it", label: "How I built it" }]}>
+
+    <div class="study">
+      <h2 id="the-results">The results</h2>
+      <p>Measured on real runs in September 2026. Before and after compare the same question or the same evidence, so the only thing that changed is the fix.</p>
+      <table class="data-table">
+        <thead><tr><th>What</th><th>Before</th><th>After</th><th>Measured on</th></tr></thead>
+        <tbody>
+          <tr><td>Weakly supported ("partial") claims</td><td class="n">64%</td><td class="n">41%</td><td>A controlled replay on the same evidence</td></tr>
+          <tr><td>Sentences with a citation</td><td class="n"></td><td class="n">45 of 46</td><td>The latest run</td></tr>
+          <tr><td>Invented sources</td><td class="n"></td><td class="n">0</td><td>The latest run</td></tr>
+          <tr><td>Cost per question</td><td class="n">$1.68</td><td class="n">$1.25</td><td>The same question, before and after tuning</td></tr>
+          <tr><td>Time per question</td><td class="n">6 min 40 s</td><td class="n">2 min 29 s</td><td>The same question</td></tr>
+          <tr><td>What the writer reads</td><td class="n">~194k tokens</td><td class="n">~11.6k</td><td>One run: raw search results vs. compact notes</td></tr>
+        </tbody>
+      </table>
+
+      <h2 id="how-it-works">How it works</h2>
+      <p>It's a fixed pipeline with model steps inside it, not one open-ended agent loop. Code sets the order; the model decides within each step what to search, what counts as support, and how to write. That keeps cost, time and failures predictable, and every step can be tested on its own.</p>
+    </div>
+    <div class="max-w-[68ch]"><Flow label="The research agent's six steps" steps={steps} /></div>
+
+    <div class="study">
+      <h2 id="what-comes-out">What comes out</h2>
+      <p>The opening of a real brief, for the question "Are AI medical scribes actually reducing doctor burnout?" Every bracketed number points to a source the agent read and checked.</p>
+    </div>
+    <figure class="sample my-6 max-w-[68ch]">
+      <p class="who">Research brief, bottom line</p>
+      <p>Ambient AI documentation is now deployed at enterprise scale across most large US health systems — Microsoft reports 400–600+ healthcare organizations on DAX/Dragon Copilot [S2][S3], and Abridge alone spans Kaiser Permanente's 40 hospitals and 24,000+ physicians, Johns Hopkins' 6,700 clinicians, and Mayo Clinic [S6][S8]. The burnout evidence is real but modest and uneven: the first RCT found improvements in burnout, work exhaustion and task load with any scribe but documentation-time savings only for one of two vendors [S15][S17], and a 5-system JAMA study found 13.4 fewer EHR minutes and 16.0 fewer documentation minutes per 8 patient-hours with no significant change in after-hours 'pajama time' [S24].</p>
+      <figcaption class="mt-3 text-[13.5px] text-muted">Quoted as the agent wrote it. <a href={`${app}/examples/ai-scribes.md`} class="text-ink underline underline-offset-4">Read the full brief and its 53 sources ↗</a></figcaption>
+    </figure>
+
+    <div class="study">
+      <h2 id="what-broke">What broke</h2>
+
+      <h3>It found zero evidence on the first run.</h3>
+      <p>The newest version of the web search tool routes results through a code sandbox, and it came back with 0 citations and took 150 seconds per worker. I only found out by dumping the raw response for one worker. The older search tool returned 18 cited claims in 29 seconds on the same sub-question at the same cost, so I pinned it. For an agent built on provenance, citations matter more than the newest tool.</p>
+
+      <h3>My planned fix was aimed at the wrong cause.</h3>
+      <p>Too many claims came back "partial." My plan was to show the checker all of a claim's quotes at once. Before building that, I counted why claims were partial across three runs: <strong>76 to 88% had a quote that was cut off</strong> at about 150 characters, often right before the number the claim was about. The worker had read the whole page; only the excerpt was short.</p>
+      <p>So the agent now downloads the page with a plain HTTP request and completes the sentence. Matching has to work on words, not characters, because the quote is markdown and the page isn't. Real Wikipedia pages exposed edge cases my first tests missed (link targets, <code>[7]</code> markers, two excerpts glued into one), and handling them raised recovery on one run from 61 to 73 of 81 cut-off quotes. On a controlled replay with the same evidence, partial claims fell from 64% to 41% and supported claims rose from 31% to 54%.</p>
+
+      <h3>The first run cost $1.68 and took almost 7 minutes.</h3>
+      <p>A cost ledger for every step showed what I didn't expect: validation, which is basically a grading job, was a third of the cost and took 152 seconds. Lowering how hard it thinks and running its batches in parallel cut it to $0.35 and 31 seconds, and a question to $1.25 and 2 minutes 29 seconds.</p>
+
+      <h3>The grader isn't as consistent as it looks.</h3>
+      <p>In a second replay, 10 of the 48 claims whose quote hadn't changed still got a different verdict, all stricter. A claim looks weaker next to stronger ones in the same batch. So one run's small differences are noise, and any real evaluation has to repeat runs.</p>
+
+      <h2 id="how-it-avoids-making-things-up">How it avoids making things up</h2>
+      <ol>
+        <li><strong>Cite it or it doesn't count.</strong> Text without a citation never reaches the brief; it's logged as uncited.</li>
+        <li><strong>A separate check of every claim against its quote.</strong> The checker judges support, not truth, and fails closed: a claim it skipped counts as unsupported. It caught real misattributions, like a Cleveland Clinic statistic cited to a Mass General Brigham quote.</li>
+        <li><strong>The writer only sees checked notes</strong> and has to cite every factual sentence. Partial support has to be hedged.</li>
+        <li><strong>Code audits the brief.</strong> It strips citations to sources that don't exist and counts sentences without one.</li>
+      </ol>
+
+      <h2 id="known-issues">Known issues</h2>
+      <ul>
+        <li>Partial claims are still 41 to 50%. The main cause now is claims that bundle several facts from different sentences. Pages that block downloads or are PDFs keep their cut-off quote.</li>
+        <li>A claim's verdict can change when the claims graded next to it change.</li>
+        <li>The brief ignores its length target: asked for 600 to 900 words, it writes about 2,000.</li>
+      </ul>
+
+      <h2 id="how-i-built-it">How I built it</h2>
+      <p>I built it with Claude Code as my pair programmer. It wrote most of the code. I picked what to build, tested it on real questions, measured every step, and decided which problems were worth fixing.</p>
+    </div>
+
+    </StudyBody>
+
+    <NextStudy href="/work/coach/" title="Coach" text="An AI trainer tested by a fake user for ten days at a time." />
+  </div>
+</Base>

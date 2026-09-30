@@ -1,0 +1,76 @@
+---
+import Base from "../../layouts/Base.astro";
+import StudyHeader from "../../components/StudyHeader.astro";
+import Flow from "../../components/Flow.astro";
+import NextStudy from "../../components/NextStudy.astro";
+import StudyBody from "../../components/StudyBody.astro";
+
+const steps = [
+  { name: "A request", who: "The orchestrator, in Claude Code", text: "Decides which agent a goal needs and calls it like any other tool." },
+  { name: "The MCP server", who: "Python, over stdio", text: "One small server exposes every agent as a tool. It checks the settings a caller asked for against the caps." },
+  { name: "The agent runs", who: "Its own app, in its own environment", text: "The server starts the agent's command line with --json. Agents never share dependencies, so adding one changes nothing else." },
+  { name: "Progress streams back", who: "Code", text: "The agent's stage lines ([3/6]...) become progress updates the caller can watch." },
+  { name: "One result", who: "The result contract", text: "Exactly one JSON object: status, output, error, cost in dollars, seconds, and the files it saved." },
+];
+---
+<Base title="Agent fleet" description="An MCP server that lets one orchestrator run Judd's agents as tools, with caps on spending, a person approving paid calls, and stuck jobs shut down.">
+  <div class="container-page">
+    <StudyHeader
+      title="Agent fleet"
+      pitch="My agents are separate apps, each with its own folder, tests and ship. A small MCP server exposes all of them as tools, so one orchestrator agent can run them. Anything that spends money has a cap and waits for a person to approve it."
+      facts={[
+        { label: "Shipped", value: "September 2026" },
+        { label: "Stack", value: "Python, Model Context Protocol (MCP)" },
+        { label: "Agents connected", value: "The research agent, so far" },
+        { label: "Built with", value: "Claude Code as my pair programmer" },
+      ]}
+      links={[
+        { label: "Code", href: "https://github.com/juddg-commits/year-of-ai/tree/main/apps/fleet-mcp" },
+      ]}
+    />
+
+    <StudyBody toc={[{ id: "how-it-works", label: "How it works" }, { id: "the-tools-so-far", label: "The tools so far" }, { id: "guarding-the-money", label: "Guarding the money" }, { id: "what-i-learned", label: "What I learned" }, { id: "whats-next", label: "What's next" }, { id: "how-i-built-it", label: "How I built it" }]}>
+
+    <div class="study">
+      <h2 id="how-it-works">How it works</h2>
+      <p>Every agent follows one result contract: run its command line with <code>--json</code>, and it prints progress on one channel and exactly one JSON object on the other. The server only has to know that contract, not how each agent works inside.</p>
+    </div>
+    <div class="max-w-[68ch]"><Flow label="How the orchestrator runs an agent" steps={steps} /></div>
+
+    <div class="study">
+      <h2 id="the-tools-so-far">The tools so far</h2>
+      <table class="data-table">
+        <thead><tr><th>Tool</th><th>What it does</th><th>Cost</th></tr></thead>
+        <tbody>
+          <tr><td><code>research</code></td><td>Runs the <a href="/work/research-agent/">research agent</a>: a brief where every sentence cites its source.</td><td class="n">~$1.25, 2–3 min</td></tr>
+          <tr><td><code>recent_research</code></td><td>Lists past briefs, so a caller can reuse one instead of paying again.</td><td class="n">Free</td></tr>
+        </tbody>
+      </table>
+
+      <h2 id="guarding-the-money">Guarding the money</h2>
+      <ul>
+        <li><strong>Caps a caller can't raise.</strong> A research call can ask for at most 4 sub-questions with 3 searches each. It can ask for less, never more.</li>
+        <li><strong>A person in the loop.</strong> Paid tools aren't pre-approved, so the orchestrator has to ask before it spends.</li>
+        <li><strong>Stuck jobs get killed.</strong> A cancelled or stuck call shuts down the agent's process so it stops spending. The cleanup runs no matter how the call ends, not only on a timeout.</li>
+        <li><strong>Failures say what they cost.</strong> Every error comes back as a tool error that includes what was spent.</li>
+      </ul>
+
+      <h2 id="what-i-learned">What I learned</h2>
+      <ul>
+        <li><strong>In an MCP server over stdio, never print to stdout.</strong> That channel carries the protocol itself, so one stray print breaks the connection.</li>
+        <li><strong>Big results need a limit.</strong> The caller caps a tool result at about 25,000 tokens, so long output is cut and points to the saved file instead.</li>
+        <li><strong>A paid run must never crash after the money is spent.</strong> Anything that touches the network catches its errors and keeps what it already has.</li>
+      </ul>
+
+      <h2 id="whats-next">What's next</h2>
+      <p>A front door that sends every request to the right agent and checks my rules on privacy and cost before anything runs, and more agents behind it.</p>
+
+      <h2 id="how-i-built-it">How I built it</h2>
+      <p>I built it with Claude Code as my pair programmer, and the orchestrator itself runs in Claude Code.</p>
+    </div>
+
+    </StudyBody>
+
+    <NextStudy href="/work/research-agent/" title="Research agent" text="The first agent in the fleet: a brief where every sentence cites its source." />
+  </div>
+</Base>

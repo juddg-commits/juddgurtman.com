@@ -7,3 +7,5 @@ bot/runs/
 bot/private-checks.json
 bot/.dev.vars
 bot/.wrangler/
+dist/
+.astro/

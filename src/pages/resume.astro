@@ -1,0 +1,182 @@
+---
+// The resume: one page on screen, and the source of the PDF (print styles below).
+// Only verified claims. The internship stays at the no-company-data level used on /experience/.
+// To refresh the PDF after an edit: print this page to Letter with no headers or footers,
+// and save it as public/judd-gurtman-resume.pdf. Links stay absolute: a PDF resolves a relative
+// link to wherever it was printed, and the first print pointed every project at localhost.
+import Base from "../layouts/Base.astro";
+import ContactButtons from "../components/ContactButtons.astro";
+
+const contact = [
+  { label: "Ann Arbor, MI" },
+  { label: "judd@juddgurtman.com", href: "mailto:judd@juddgurtman.com" },
+  { label: "juddgurtman.com", href: "https://juddgurtman.com" },
+  { label: "linkedin.com/in/judd-gurtman-208769235", href: "https://www.linkedin.com/in/judd-gurtman-208769235/" },
+  { label: "github.com/juddg-commits", href: "https://github.com/juddg-commits" },
+];
+const projects = [
+  {
+    name: "Coach: full-stack AI fitness app", href: "https://juddgurtman.com/work/coach/", stack: "Python, FastAPI, Claude API", when: "Aug to Sep 2026",
+    points: [
+      "Built a FastAPI backend (19 routes), an installable phone front end and a Claude agent that acts through 7 tools: it logs workouts, meals and weigh-ins and writes each day's session from logged lifts.",
+      "Scored the agent with a 10-day simulated user (fake clock, spending cap) and 13 automated checks: 7/13 on the first run, 13/13 in 3 of the last 5. 37 offline tests; 25 bugs fixed in two QA passes.",
+      "Cut full-price input tokens 96% by restructuring the prompt for caching; the same ten-day test fell from $2.07 to $1.35.",
+    ],
+  },
+  {
+    name: "Research agent: cited research briefs", href: "https://juddgurtman.com/work/research-agent/", stack: "Python, Claude API, web search", when: "Sep 2026",
+    points: [
+      "Answers open questions with a brief: researches the parts in parallel, checks every claim against its source quote, and cites nearly every sentence (45 of 46, 0 invented sources).",
+      "Counted causes before fixing: 76 to 88% of weak claims came from quotes cut off at 150 characters; recovering full sentences cut them from 64% to 41% in a controlled replay.",
+      "Cut cost per question from $1.68 to $1.25 and runtime from 6m40s to 2m29s, guided by a per-stage cost ledger.",
+    ],
+  },
+  {
+    name: "Agent fleet", href: "https://juddgurtman.com/work/agent-fleet/", stack: "Python, MCP", when: "Sep 2026",
+    points: [
+      "Built an MCP server that gives an orchestrator my research agent as a tool, with spending caps and approval before paid runs.",
+    ],
+  },
+];
+const internship = [
+  "Audited 29 KPIs across 4 dashboards (31 tabs), traced 7 inconsistencies to formulas and date filters, and made 8 consolidation recommendations; the team added disclaimers to the live dashboards and flagged one for a rebuild.",
+  "Took my first failure-rate estimate to the process owner and re-cut outcomes into 4 categories (handled correctly, intended routing, caller error, true system error); the real rate was far lower, matching the team's.",
+  "Found why the data was hard to read: many call records had no linked Salesforce work order; classified calls by reason with AI and proposed a first-contact resolution metric.",
+  "Validated a Power BI model against Salesforce: sample-tested 10 records, then compared full populations across 2 tables; after my manager's review, changed my verdict and documented what my first check missed.",
+  "Gave five presentations in six weeks, the last one to company leadership.",
+];
+const jobs = [
+  { name: "Jay's Valet, Aspen", role: "Valet lead, running shifts (part-time)", when: "2022 to present" },
+  { name: "Bosq, Aspen (Michelin-starred restaurant)", role: "Food runner and server support", when: "Summer 2025" },
+  { name: "Labor for a Neighbor, Aspen", role: "Founder: window washing, yard work and hauling for neighbors", when: "Summer 2024" },
+];
+const other = [
+  { name: "Judd Bot", stack: "JavaScript, Cloudflare Workers, Claude API", text: "The voice and text assistant on juddgurtman.com. It answers only from a public fact list, cites sources, and passed 99 of 100 questions in its latest code-graded eval, including prompt-injection attempts." },
+  { name: "Fuel price volatility", stack: "Python, pandas", text: "26,000+ weekly EIA prices; the West Coast's gap to the U.S. average varies over 2x the Gulf Coast's." },
+  { name: "Movie ratings", stack: "Python, APIs, SQLite", text: "TMDb rates action and horror 0.7 to 0.8 points above OMDb; on drama they agree within 0.1." },
+];
+const skills = [
+  { label: "AI", text: "Claude API (tool use, structured outputs, prompt caching), MCP, multi-agent orchestration, LLM evaluation, Claude Code" },
+  { label: "Code and data", text: "Python (pandas, NumPy, matplotlib), SQL, JavaScript, TypeScript, FastAPI, REST APIs, Git, GitHub Actions, Cloudflare Workers, Power BI (model validation), Salesforce, Excel" },
+  { label: "Interests", text: "Skiing, sports analytics, lacrosse, house music" },
+];
+---
+<Base title="Resume" description="Judd Gurtman's resume: Information Analysis at the University of Michigan (May 2027), AI projects with measured results, and a data analytics internship.">
+  <div class="container-page">
+    <header class="no-print border-b border-line pb-8 pt-12 md:pt-16">
+      <h1 class="mb-4 text-[36px] font-semibold tracking-[-0.025em] md:text-[44px]">Resume</h1>
+      <ContactButtons resume="pdf" />
+    </header>
+
+    <article class="resume" aria-label="Resume of Judd Gurtman">
+      <header class="r-top">
+        <p class="r-name">Judd Gurtman</p>
+        <p class="r-contact">
+          {contact.map((c) => c.href ? <a href={c.href}>{c.label}</a> : <span>{c.label}</span>)}
+        </p>
+        <p class="r-summary">Information Analysis senior (May 2027) who builds and evaluates LLM agents, and checks what the numbers are actually counting.</p>
+      </header>
+
+      <section>
+        <h2>Education</h2>
+        <div class="r-entry">
+          <p class="r-line"><span><strong>University of Michigan, School of Information</strong><em class="r-meta"> · B.S. Information, Information Analysis</em></span><span>Expected May 2027</span></p>
+          <p class="r-text">Coursework: Data-Oriented Programming (Python, SQL), Statistics and Data Analysis, Information Ethics; this fall: Data Manipulation, Data Exploration, User Modeling, client capstone.</p>
+          <p class="r-text">Online courses completed: Google Data Analytics (Coursera); Analyzing and Visualizing Data with Power BI (DavidsonX, edX).</p>
+        </div>
+      </section>
+
+      <section>
+        <h2>AI projects, built with Claude Code <a class="r-h2-link" href="https://github.com/juddg-commits/year-of-ai">github.com/juddg-commits/year-of-ai</a></h2>
+        {projects.map((p) => (
+          <div class="r-entry">
+            <p class="r-line"><span><strong><a href={p.href}>{p.name}</a></strong><em class="r-meta"> · {p.stack}</em></span><span>{p.when}</span></p>
+            <ul>{p.points.map((pt) => <li>{pt}</li>)}</ul>
+          </div>
+        ))}
+      </section>
+
+      <section>
+        <h2>Experience</h2>
+        <div class="r-entry">
+          <p class="r-line"><span><strong>TrueSource, an OnPoint Group company</strong><em class="r-meta"> · Data Analytics Intern, remote</em></span><span>Jun to Jul 2026</span></p>
+          <ul>{internship.map((pt) => <li>{pt}</li>)}</ul>
+        </div>
+        {jobs.map((j) => (
+          <p class="r-line r-job"><span><strong>{j.name}</strong><em class="r-meta"> · {j.role}</em></span><span>{j.when}</span></p>
+        ))}
+      </section>
+
+      <section>
+        <h2>Other projects</h2>
+        <ul>
+          {other.map((o) => <li><strong>{o.name}</strong> ({o.stack}): {o.text}</li>)}
+        </ul>
+      </section>
+
+      <section>
+        <h2>Leadership</h2>
+        <p class="r-text"><strong>Michigan Youth Sports Initiative</strong>: volunteer youth flag football coach, team of about 15, since 2024 · <strong>Aspen High School</strong>: assistant varsity lacrosse coach, roster of about 30, spring 2026</p>
+      </section>
+
+      <section>
+        <h2>Skills</h2>
+        <dl class="r-skills">
+          {skills.map((s) => <div><dt>{s.label}:</dt> <dd>{s.text}</dd></div>)}
+        </dl>
+      </section>
+    </article>
+  </div>
+</Base>
+
+<style is:global>
+  .resume { max-width: 860px; margin: 40px auto 0; background: var(--surface); border: 1px solid var(--line); border-radius: 6px;
+            padding: 32px 24px; font-size: 15px; line-height: 1.5; }
+  @media (min-width: 768px) { .resume { padding: 48px 56px; } }
+  .resume a { color: inherit; text-decoration: underline; text-decoration-color: var(--line); text-underline-offset: 3px; }
+  .resume a:hover { text-decoration-color: var(--ink); }
+  .r-top { text-align: center; margin-bottom: 8px; }
+  .r-name { font-size: 28px; font-weight: 600; letter-spacing: -0.02em; color: var(--ink); margin: 0; }
+  .r-contact { margin: 6px 0 0; display: flex; flex-wrap: wrap; justify-content: center; gap: 2px 14px; font-size: 13.5px; color: var(--muted); }
+  .r-summary { margin: 14px auto 0; max-width: 70ch; }
+  .resume h2 { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; margin: 26px 0 10px; padding-bottom: 4px;
+               border-bottom: 1.5px solid var(--ink); font-size: 13px; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; color: var(--ink); }
+  .r-h2-link { font-size: 12.5px; font-weight: 400; letter-spacing: 0; text-transform: none; color: var(--muted) !important; }
+  .r-entry { margin: 0 0 12px; }
+  .r-job { margin: 3px 0; }
+  .r-line { display: flex; justify-content: space-between; gap: 16px; margin: 0; color: var(--ink); }
+  .r-line strong { font-weight: 600; }
+  .r-meta { font-style: normal; color: var(--muted); }
+  .resume p.r-text strong { color: var(--ink); font-weight: 600; }
+  .r-line > span:last-child { flex: none; color: var(--muted); font-size: 14px; }
+  .r-text { margin: 2px 0 0; }
+  .resume ul { margin: 4px 0 0; padding-left: 18px; list-style: disc; }
+  .resume li { margin: 3px 0; }
+  .resume li::marker { color: var(--muted); }
+  .resume li strong { color: var(--ink); font-weight: 600; }
+  .r-skills { margin: 0; }
+  .r-skills div { margin: 3px 0; }
+  .r-skills dt { display: inline; font-weight: 600; color: var(--ink); }
+  .r-skills dd { display: inline; margin: 0; }
+
+  /* The PDF: Letter, one page, black on white, no site chrome. */
+  @media print {
+    @page { size: letter; margin: 0.36in 0.5in; }
+    :root:root { color-scheme: light; --bg: #fff; --surface: #fff; --ink: #000; --text: #1c1c1c; --muted: #4d4d4d; --line: #b5b5b5; }
+    body > header, body > footer, body > a[href="#main"], .no-print { display: none !important; }
+    body { background: #fff; min-height: 0 !important; }
+    .container-page { padding: 0; max-width: none; }
+    .resume { max-width: none; margin: 0; padding: 0; border: 0; border-radius: 0; font-size: 9.1pt; line-height: 1.32; }
+    .resume a { text-decoration: none; }
+    .r-name { font-size: 19pt; }
+    .r-contact { font-size: 8.8pt; margin-top: 2px; }
+    .r-summary { margin-top: 6px; max-width: none; }
+    .resume h2 { margin: 9px 0 4px; padding-bottom: 2px; font-size: 9pt; border-bottom-width: 1px; }
+    .r-h2-link { font-size: 8.5pt; }
+    .r-entry { margin-bottom: 6px; break-inside: avoid; }
+    .r-line > span:last-child, .r-meta { font-size: 8.8pt; }
+    .resume ul { margin-top: 2px; padding-left: 14px; }
+    .resume li { margin: 1.5px 0; }
+    .r-skills div { margin: 1.5px 0; }
+  }
+</style>

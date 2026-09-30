@@ -1,0 +1,25 @@
+---
+import Base from "../layouts/Base.astro";
+import { writing } from "../data/projects";
+---
+<Base title="Writing" description="Write-ups and design notes from Judd Gurtman's Year of AI: what broke in each build, and the measured numbers behind every claim.">
+  <div class="container-page">
+    <header class="border-b border-line pb-10 pt-12 md:pt-16">
+      <h1 class="mb-4 text-[36px] font-semibold tracking-[-0.025em] md:text-[44px]">Writing</h1>
+      <p class="max-w-[60ch] text-[18px] leading-relaxed">Every build ships with a write-up of what broke and design notes on why it works the way it does. They live next to the code on GitHub.</p>
+    </header>
+    <ul class="max-w-[820px]">
+      {writing.map((w) => (
+        <li class="border-b border-line">
+          <a href={w.href} class="group grid gap-1 py-7 no-underline md:grid-cols-[150px_1fr] md:gap-8">
+            <span class="text-[14px] text-muted">{w.kind}<span class="block">{w.when}</span></span>
+            <span>
+              <strong class="block text-[20px] font-semibold text-ink group-hover:underline group-hover:underline-offset-4">{w.title} ↗</strong>
+              <span class="mt-1.5 block">{w.summary}</span>
+            </span>
+          </a>
+        </li>
+      ))}
+    </ul>
+  </div>
+</Base>

@@ -4,6 +4,7 @@
   "type": "module",
   "scripts": {
     "test": "node --test",
+    "site": "node site-text.mjs",
     "ask": "node --env-file=.env ask.js",
     "eval": "node --env-file=.env eval.js"
   },

@@ -1,0 +1,79 @@
+---
+import Base from "../layouts/Base.astro";
+---
+<Base title="Experience" description="Judd Gurtman's experience: data analytics internship at TrueSource, work in Aspen, coaching, and Information Analysis at the University of Michigan.">
+  <div class="container-page">
+    <header class="border-b border-line pb-10 pt-12 md:pt-16">
+      <h1 class="mb-4 text-[36px] font-semibold tracking-[-0.025em] md:text-[44px]">Experience</h1>
+      <p class="max-w-[60ch] text-[18px] leading-relaxed">Where my rule about checking what a number is actually counting comes from.</p>
+      <p class="mt-5 text-[15px]"><a href="/resume/" class="link-accent">See my full resume →</a></p>
+    </header>
+
+    <article class="grid gap-6 border-b border-line py-12 md:grid-cols-[250px_1fr] md:gap-12">
+      <div class="text-[14.5px] leading-snug text-muted">
+        <strong class="block text-[15px] font-medium text-ink">June to July 2026</strong>
+        Six weeks, remote
+      </div>
+      <div class="max-w-[68ch]">
+        <h2 class="text-[24px] font-semibold tracking-[-0.015em]">Data Analytics Intern</h2>
+        <p class="mb-5 text-muted">TrueSource, an OnPoint Group company</p>
+        <ul class="list-disc space-y-3 pl-5 marker:text-muted">
+          <li>My first estimate of a system's failure rate looked alarming. I took it to the person who owns the process, learned that much of what I'd counted was routing working as designed, and re-cut the outcomes into four categories: handled correctly, intended routing, caller error and true system error. The real error rate was far lower and matched the team's own figure.</li>
+          <li>Found why the data was confusing: many call records weren't linked to a Salesforce work order, so outcomes couldn't be measured. Proposed a first-contact resolution metric, and learned it needs a clear definition before anyone builds scorecards on it.</li>
+          <li>Audited 29 KPIs across 4 operational dashboards (31 tabs), documented 7 inconsistencies between them from formulas and date filters, and made 8 consolidation recommendations. The analytics team added disclaimers to the live dashboards and flagged one for a rebuild.</li>
+          <li>Validated a Power BI model against Salesforce: sample-tested 10 records, then compared the full populations across 2 tables. After my manager's review I changed my first verdict and documented what my first check missed.</li>
+          <li>Used AI to classify a large set of calls by reason and resolution, and added a third angle to the analysis that nobody had asked for.</li>
+          <li>Gave five presentations in six weeks, the last one to company leadership.</li>
+        </ul>
+        <p class="mt-6 border-l-2 border-accent pl-4">What I took from it: check a number with the person who owns the process before trusting your own cut of the data, and change your conclusion when the evidence changes.</p>
+      </div>
+    </article>
+
+    <article class="grid gap-6 border-b border-line py-12 md:grid-cols-[250px_1fr] md:gap-12">
+      <div class="text-[14.5px] leading-snug text-muted">
+        <strong class="block text-[15px] font-medium text-ink">2022 to now</strong>
+        Aspen, Colorado
+      </div>
+      <div class="max-w-[68ch]">
+        <h2 class="text-[24px] font-semibold tracking-[-0.015em]">Work in Aspen</h2>
+        <ul class="mt-3 list-disc space-y-3 pl-5 marker:text-muted">
+          <li><strong class="font-medium text-ink">Bosq</strong>, a Michelin-starred restaurant: food runner and server support, summer 2025.</li>
+          <li><strong class="font-medium text-ink">Labor for a Neighbor</strong>: started a neighborhood labor service (window washing, yard work and hauling), summer 2024.</li>
+          <li><strong class="font-medium text-ink">Jay's Valet</strong>: part-time since 2022, now a valet lead running shifts.</li>
+        </ul>
+      </div>
+    </article>
+
+    <article class="grid gap-6 border-b border-line py-12 md:grid-cols-[250px_1fr] md:gap-12">
+      <div class="text-[14.5px] leading-snug text-muted">
+        <strong class="block text-[15px] font-medium text-ink">Since January 2024</strong>
+        Volunteer
+      </div>
+      <div class="max-w-[68ch]">
+        <h2 class="text-[24px] font-semibold tracking-[-0.015em]">Youth flag football coach</h2>
+        <p class="mt-3">I've coached youth flag football as a volunteer with the Michigan Youth Sports Initiative since January 2024, with a team of about 15 kids.</p>
+      </div>
+    </article>
+
+    <article class="grid gap-6 border-b border-line py-12 md:grid-cols-[250px_1fr] md:gap-12">
+      <div class="text-[14.5px] leading-snug text-muted">
+        <strong class="block text-[15px] font-medium text-ink">Spring 2026</strong>
+        Aspen High School
+      </div>
+      <div class="max-w-[68ch]">
+        <h2 class="text-[24px] font-semibold tracking-[-0.015em]">Assistant varsity lacrosse coach</h2>
+        <p class="mt-3">Assistant coach for the Aspen High School varsity lacrosse team, a roster of about 30 players, for the spring 2026 season.</p>
+      </div>
+    </article>
+
+    <article class="grid gap-6 py-12 md:grid-cols-[250px_1fr] md:gap-12">
+      <div class="text-[14.5px] leading-snug text-muted">
+        <strong class="block text-[15px] font-medium text-ink">Graduating May 2027</strong>
+      </div>
+      <div class="max-w-[68ch]">
+        <h2 class="text-[24px] font-semibold tracking-[-0.015em]">University of Michigan</h2>
+        <p class="mt-3">Information Analysis. I like the part of analytics where the data is messier than the dashboard suggests, and I've spent this year learning to build AI that holds up there.</p>
+      </div>
+    </article>
+  </div>
+</Base>

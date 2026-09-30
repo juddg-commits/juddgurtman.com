@@ -1,0 +1,44 @@
+---
+import Base from "../layouts/Base.astro";
+import ContactButtons from "../components/ContactButtons.astro";
+const principles = [
+  { title: "Measure before fixing.", text: "My research agent's obvious fix was aimed at the wrong cause. Counting first showed the real one." },
+  { title: "Only claim what I measured.", text: "Every AI result on this site traces back to a run, a trace file or a controlled replay." },
+  { title: "A person approves anything risky.", text: "If one of my agents is about to spend money or talk to someone, it waits for a human." },
+];
+---
+<Base title="About" description="About Judd Gurtman: Information Analysis at the University of Michigan, building AI systems in public, coaching, skiing, cooking and house music. Looking for data and AI roles from 2027.">
+  <div class="container-page">
+    <section class="grid gap-10 border-b border-line pb-14 pt-12 md:grid-cols-[1fr_280px] md:gap-16 md:pt-16">
+      <div class="max-w-[62ch]">
+        <h1 class="mb-6 text-[36px] font-semibold tracking-[-0.025em] md:text-[44px]">About</h1>
+        <p class="mb-4 text-[18px] leading-relaxed">I'm a senior at the University of Michigan studying Information Analysis, graduating in May 2027. I like the part of analytics where the data is messier than the dashboard suggests, and I've spent this year learning to build AI that holds up there.</p>
+        <p class="mb-4">My working rule: I check what a number is actually counting before I trust it. It came from an internship where my first, alarming estimate turned out to be counting routing that worked as designed. I ask "why" a lot, too: "What's the point of using fake data?" changed what I built next. Sports made me competitive.</p>
+        <p class="mb-4">Why AI? In August 2026 I wrote down, "I want to build something real so I can learn and understand AI." That became my Year of AI: one project at a time, shipped in public. I learn fast and I'm ambitious: I'm not a computer science major, and in August and September 2026 I built Coach, the research agent and the agent fleet, each with its own tests and measured results. Some projects start from plain curiosity. The fuel-price one began after I watched Landman, and I built Clout Royale because I've been a gamer my whole life.</p>
+        <p class="mb-4">Outside of class I coach youth flag football, which I've done as a volunteer since January 2024, and in spring 2026 I was an assistant coach for the Aspen High School varsity lacrosse team. I'm an elite skier, raised on Aspen's mountains. I follow sports analytics a little too closely and love to cook. I lift, and I built Coach partly for my own training. I'm into house music, and this fall I'm taking an electronic music production class to learn to make it. And I can solve a Rubik's cube in about 30 seconds.</p>
+      </div>
+      <img src="/images/judd.jpg" alt="Judd Gurtman" width="640" height="640" class="aspect-square w-40 rounded object-cover md:w-full">
+    </section>
+
+    <section class="pt-14" aria-labelledby="how">
+      <div class="section-head"><h2 id="how">How I work</h2></div>
+      <ol class="grid gap-px md:grid-cols-3">
+        {principles.map((p, i) => (
+          <li class="border-b border-line py-6 md:border-b-0 md:pr-8">
+            <span class="num text-[13px] text-muted">{String(i + 1).padStart(2, "0")}</span>
+            <h3 class="mt-1 text-[18px] font-semibold">{p.title}</h3>
+            <p class="mt-2 text-[15.5px]">{p.text}</p>
+          </li>
+        ))}
+      </ol>
+    </section>
+
+    <section class="pt-14" aria-labelledby="contact">
+      <div class="section-head"><h2 id="contact">Get in touch</h2></div>
+      <p class="mt-6 max-w-[62ch]">I'm looking for full-time data and AI roles starting in 2027, after I graduate. I'm a U.S. citizen, so I don't need visa sponsorship, and I'm open to relocating anywhere in the U.S. and to in-office, hybrid or remote work.</p>
+      <ContactButtons class="mt-6" />
+      <p class="mt-5 text-[15px] text-muted">Email reaches me at <a href="mailto:judd@juddgurtman.com" class="text-ink underline underline-offset-4">judd@juddgurtman.com</a>.</p>
+      <p class="mt-6 text-[15px]">Or <a href="/ask/" class="link-accent">ask Judd Bot</a> about my work.</p>
+    </section>
+  </div>
+</Base>

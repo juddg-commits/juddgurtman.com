@@ -1,0 +1,105 @@
+@import "tailwindcss";
+
+/* Colors live in CSS variables so light and dark come from one set of names.
+   Tailwind classes (text-ink, border-line...) read them. */
+@theme inline {
+  --font-sans: "IBM Plex Sans", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: "IBM Plex Mono", ui-monospace, monospace;
+  --color-bg: var(--bg);
+  --color-surface: var(--surface);
+  --color-ink: var(--ink);
+  --color-text: var(--text);
+  --color-muted: var(--muted);
+  --color-line: var(--line);
+  --color-accent: var(--accent);
+  --color-accent-soft: var(--accent-soft);
+}
+
+:root {
+  --bg: #fbfbfa;
+  --surface: #ffffff;
+  --ink: #101316;
+  --text: #2c3238;
+  --muted: #5f666f;
+  --line: #e1e3e6;
+  --accent: #0a6b4f;
+  --accent-soft: #e8f2ee;
+  color-scheme: light;
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #0e1113;
+    --surface: #15191c;
+    --ink: #eef1f3;
+    --text: #c5ccd3;
+    --muted: #8d96a0;
+    --line: #262c31;
+    --accent: #4cc79a;
+    --accent-soft: #12251e;
+    color-scheme: dark;
+  }
+}
+
+@layer base {
+  html { -webkit-text-size-adjust: 100%; scroll-padding-top: 5rem; }
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--font-sans);
+    font-size: 16px;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+  h1, h2, h3, h4 { color: var(--ink); text-wrap: balance; }
+  p, li { text-wrap: pretty; }
+  a { color: inherit; }
+  :focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 2px; }
+  ::selection { background: var(--accent-soft); color: var(--ink); }
+  [hidden] { display: none !important; }
+}
+
+@layer components {
+  .container-page { width: 100%; max-width: 1120px; margin-inline: auto; padding-inline: 20px; }
+  @media (min-width: 768px) { .container-page { padding-inline: 32px; } }
+
+  .num { font-family: var(--font-mono); font-feature-settings: "tnum"; }
+
+  /* A section heading: small, bold, over a 2px rule, with an optional link on the right. */
+  .section-head { display: flex; align-items: baseline; justify-content: space-between; gap: 16px;
+                  border-bottom: 2px solid var(--ink); padding-bottom: 12px; }
+  .section-head h2 { margin: 0; font-size: 15px; font-weight: 600; letter-spacing: 0.01em; }
+  .section-head a { font-size: 14.5px; color: var(--muted); text-decoration: none; }
+  .section-head a:hover { color: var(--ink); }
+
+  .link-accent { color: var(--accent); font-weight: 500; text-decoration: none; }
+  .link-accent:hover { text-decoration: underline; text-underline-offset: 3px; }
+
+  /* Long-form case study text. */
+  .study { max-width: 68ch; }
+  .study h2 { font-size: 24px; font-weight: 600; letter-spacing: -0.015em; margin: 56px 0 14px; }
+  .study h3 { font-size: 18px; font-weight: 600; margin: 32px 0 8px; }
+  .study p { margin: 0 0 16px; }
+  .study ul, .study ol { margin: 0 0 18px; padding-left: 22px; }
+  .study ul { list-style: disc; }
+  .study ol { list-style: decimal; }
+  .study li { margin: 6px 0; }
+  .study li::marker { color: var(--muted); }
+  .study strong { color: var(--ink); font-weight: 600; }
+  .study a { color: var(--ink); text-decoration: underline; text-underline-offset: 3px; text-decoration-color: var(--muted); }
+  .study a:hover { text-decoration-color: var(--ink); }
+  .study code { font-family: var(--font-mono); font-size: 0.88em; background: var(--accent-soft); color: var(--ink);
+                padding: 1px 5px; border-radius: 3px; }
+
+  /* Tables of measured results and before/after numbers. */
+  .data-table { width: 100%; border-collapse: collapse; font-size: 15px; margin: 8px 0 24px; }
+  .data-table th, .data-table td { text-align: left; padding: 10px 12px 10px 0; border-bottom: 1px solid var(--line); vertical-align: top; }
+  .data-table th { color: var(--muted); font-weight: 500; font-size: 13.5px; border-bottom-color: var(--ink); }
+  .data-table td.n { font-family: var(--font-mono); font-feature-settings: "tnum"; color: var(--ink); white-space: nowrap; }
+  .data-table td:last-child, .data-table th:last-child { padding-right: 0; }
+
+  /* Real output from the apps, shown as-is. */
+  .sample { border: 1px solid var(--line); background: var(--surface); border-radius: 6px; padding: 20px 22px; font-size: 15px; }
+  .sample .who { font-size: 12px; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; color: var(--muted); margin: 0 0 4px; }
+  .sample p { margin: 0 0 12px; }
+  .sample p:last-child { margin-bottom: 0; }
+}

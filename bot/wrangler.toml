@@ -14,7 +14,7 @@ type = "Text"
 globs = ["**/*.md"]
 fallthrough = true
 
-# One visitor gets 6 questions a minute, everyone together 60. The "judd-bot" key's
+# One visitor gets 6 questions a minute, everyone together 20. The "judd-bot" key's
 # monthly spend limit in the Anthropic console is the hard ceiling on the bill.
 [[ratelimits]]
 name = "PER_VISITOR"
@@ -24,7 +24,7 @@ simple = { limit = 6, period = 60 }
 [[ratelimits]]
 name = "EVERYONE"
 namespace_id = "1002"
-simple = { limit = 60, period = 60 }
+simple = { limit = 20, period = 60 }
 
 # Keeps the logs: every question, what it cost, and why any call failed.
 [observability]

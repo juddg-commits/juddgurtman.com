@@ -1,29 +1,40 @@
 # juddgurtman.com
 
-Personal site: plain HTML and CSS, no build step, hosted on GitHub Pages.
+Personal site. [Astro](https://astro.build) and Tailwind CSS, built by a GitHub Action and hosted on GitHub Pages. Judd Bot, the assistant on the Ask page, is a separate Cloudflare Worker in [`bot/`](bot/).
 
-## Preview locally
+## Pages
+
+| Page | File |
+|---|---|
+| Home | `src/pages/index.astro` |
+| Ask Judd Bot | `src/pages/ask.astro` and `src/scripts/ask.js` (the orb, the chat, voice) |
+| Work | `src/pages/work/index.astro`; case studies in `src/pages/work/*.astro` |
+| Experience, Writing, About | `src/pages/*.astro` |
+| Resume | `src/pages/resume.astro`, which is also the source of `public/judd-gurtman-resume.pdf`: after an edit, print the page to Letter with no headers or footers and save it over that file |
+
+Projects and write-ups shown on more than one page live in `src/data/projects.ts`. Colors and type are in `src/styles/global.css` (light and dark follow the system on every page).
+
+## Run it
+
+Needs Node 22.12 or newer.
+
 ```bash
-python3 -m http.server 8765    # then open http://127.0.0.1:8765
+npm install
+npm run dev        # http://localhost:4321
+npm run build      # writes dist/
+npm run preview    # serves dist/
 ```
 
-## Go live (one time)
-1. **Buy the domain** `juddgurtman.com`. Cloudflare Registrar sells at cost (~$10-11/year) and gives free email forwarding, so `judd@juddgurtman.com` can land in Gmail.
-2. **Create the repo** `juddg-commits/juddgurtman.com` (public) and push this folder.
-3. **Turn on Pages:** repo Settings → Pages → Deploy from branch → `main` / root. Set the custom domain to `juddgurtman.com` (GitHub adds a `CNAME` file), then check "Enforce HTTPS" once it's offered.
-4. **DNS** (at the registrar):
-   - `A` records for `juddgurtman.com` → `185.199.108.153`, `185.199.109.153`, `185.199.110.153`, `185.199.111.153`
-   - `CNAME` for `www` → `juddg-commits.github.io`
-5. **Email:** Cloudflare → Email Routing → forward `judd@juddgurtman.com` to your Gmail. The footer already uses that address.
+The Ask page talks to `bot.juddgurtman.com`, or to a local Worker at `127.0.0.1:8787` when the page runs on localhost. To try it locally, run the Worker (see [`bot/README.md`](bot/README.md)) and serve the site on port 8765, the origin the local Worker allows: `npm run build && npx astro preview --port 8765`.
+
+## Deploy
+
+Every push to `main` runs `.github/workflows/deploy.yml`: install, the bot's offline tests, build, publish to Pages. The repo's Pages source must be set to **GitHub Actions** (Settings → Pages). The custom domain comes from `public/CNAME`.
+
+Judd Bot deploys separately: `cd bot && npx wrangler@4 deploy`. Its facts file is bundled into the Worker, so a change to `bot/facts.md` needs a redeploy.
 
 ## Rules
-- Every AI result on the site comes from a measured run (same rule as the Year of AI repo).
-- Nothing about jobs or internships here; that lives on the resume and LinkedIn only.
-- Resume PDF (when added) has no phone number.
 
-## To add
-- Resume PDF (no phone), linked in the nav and footer
-- Photo for the right side of the hero
-- Clout Royale playable link (GitHub Pages build of the game)
-- "Ask Judd": a chat about Judd's work where every answer cites the page it came from, with a spending cap
-- Case study pages per project
+- Every AI result on the site comes from a measured run, and each case study says which run or replay.
+- The internship is shown without company data: no internal rates or volumes, no client, coworker, system or vendor names beyond what's on the Experience page.
+- Judd Bot answers only from `bot/facts.md`, and every fact links a public page that backs it.

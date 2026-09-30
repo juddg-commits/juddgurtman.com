@@ -1,0 +1,50 @@
+---
+import Base from "../layouts/Base.astro";
+import ProjectRow from "../components/ProjectRow.astro";
+import ContactButtons from "../components/ContactButtons.astro";
+import { aiProjects, writing } from "../data/projects";
+---
+<Base title="Judd Gurtman" description="Judd Gurtman builds AI systems that hold up on messy, real-world data, and measures every claim. Information Analysis, University of Michigan '27.">
+  <section class="container-page grid gap-12 pb-16 pt-14 md:grid-cols-[7fr_4fr] md:gap-[72px] md:pb-20 md:pt-24">
+    <div>
+      <h1 class="mb-7 max-w-[17ch] text-[36px] font-semibold leading-[1.1] tracking-[-0.025em] md:text-[46px]">I check what a number is actually counting before I trust it.</h1>
+      <p class="max-w-[54ch] text-[18px] leading-relaxed md:text-[18.5px]">I study Information Analysis at the University of Michigan. This year I've built a full-stack AI fitness app, a research agent that cites every sentence, and the assistant on this site, and I publish what broke and the measured numbers behind every claim.</p>
+      <ContactButtons class="mt-8" />
+      <p class="mt-5 text-[15px]"><a href="/ask/" class="link-accent">Or ask Judd Bot about my work →</a></p>
+    </div>
+    <dl class="self-end border-t-2 border-ink text-[14.5px]">
+      <div class="grid grid-cols-[110px_1fr] gap-3 border-b border-line py-2.5"><dt class="text-muted">Studying</dt><dd class="text-ink">Information Analysis, Michigan '27</dd></div>
+      <div class="grid grid-cols-[110px_1fr] gap-3 border-b border-line py-2.5"><dt class="text-muted">Building</dt><dd class="text-ink">A fleet of AI agents run by one orchestrator</dd></div>
+      <div class="grid grid-cols-[110px_1fr] gap-3 border-b border-line py-2.5"><dt class="text-muted">Last role</dt><dd class="text-ink">Data Analytics Intern, TrueSource</dd></div>
+      <div class="grid grid-cols-[110px_1fr] gap-3 border-b border-line py-2.5"><dt class="text-muted">Looking for</dt><dd class="text-ink">Full-time data and AI roles from 2027, open to relocating</dd></div>
+    </dl>
+  </section>
+
+  <section class="container-page pt-16 md:pt-20" aria-labelledby="work-title">
+    <div class="section-head"><h2 id="work-title">Selected work</h2><a href="/work/">All work →</a></div>
+    {aiProjects.map((p) => <ProjectRow project={p} />)}
+  </section>
+
+  <section class="container-page grid gap-14 pt-16 md:grid-cols-2 md:gap-16 md:pt-20">
+    <div>
+      <div class="section-head"><h2>Experience</h2><a href="/experience/">More →</a></div>
+      <a href="/experience/" class="group block border-b border-line py-4 no-underline">
+        <span class="flex justify-between gap-4"><strong class="font-medium text-ink group-hover:underline group-hover:underline-offset-4">Data Analytics Intern, TrueSource</strong><span class="shrink-0 text-[14px] text-muted">Summer 2026</span></span>
+        <span class="mt-1 block text-[14.5px]">Audited 29 KPIs across 4 dashboards and documented 7 inconsistencies. The analytics team added disclaimers to the live dashboards.</span>
+      </a>
+      <a href="/experience/" class="group block border-b border-line py-4 no-underline">
+        <span class="flex justify-between gap-4"><strong class="font-medium text-ink group-hover:underline group-hover:underline-offset-4">Assistant varsity lacrosse coach, Aspen High School</strong><span class="shrink-0 text-[14px] text-muted">Spring 2026</span></span>
+        <span class="mt-1 block text-[14.5px]">Also a volunteer youth flag football coach since 2024.</span>
+      </a>
+    </div>
+    <div>
+      <div class="section-head"><h2>Writing</h2><a href="/writing/">All writing →</a></div>
+      {writing.slice(0, 2).map((w) => (
+        <a href={w.href} class="group block border-b border-line py-4 no-underline">
+          <span class="flex justify-between gap-4"><strong class="font-medium text-ink group-hover:underline group-hover:underline-offset-4">{w.title}</strong><span class="shrink-0 text-[14px] text-muted">{w.when}</span></span>
+          <span class="mt-1 block text-[14.5px]">{w.summary}</span>
+        </a>
+      ))}
+    </div>
+  </section>
+</Base>

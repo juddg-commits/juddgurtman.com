@@ -1,0 +1,9 @@
+---
+interface Props { href: string; title: string; text: string }
+const { href, title, text } = Astro.props;
+---
+<a href={href} class="group mt-16 block max-w-[68ch] border-y border-line py-6 no-underline">
+  <span class="block text-[13.5px] text-muted">Next case study</span>
+  <span class="mt-1 block text-[22px] font-semibold text-ink group-hover:underline group-hover:underline-offset-4">{title} →</span>
+  <span class="mt-1 block text-[15px]">{text}</span>
+</a>

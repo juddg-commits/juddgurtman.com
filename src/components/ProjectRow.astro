@@ -1,0 +1,40 @@
+---
+// One project as a row: when and stack, what it does, and its measured results.
+import type { Project } from "../data/projects";
+interface Props { project: Project }
+const { project } = Astro.props;
+const page = project.slug ? `/work/${project.slug}/` : undefined;
+---
+<article class="grid gap-5 border-b border-line py-8 md:grid-cols-[170px_1fr_340px] md:gap-10">
+  <div class="text-[14px] leading-snug text-muted">
+    <strong class="block font-medium text-ink">{project.when}</strong>{project.stack}
+  </div>
+  <div>
+    <h3 class="mb-2 text-[22px] font-semibold tracking-[-0.01em]">
+      {page ? <a href={page} class="no-underline hover:underline hover:underline-offset-4">{project.title}</a> : project.title}
+    </h3>
+    <p class="mb-4 max-w-[58ch]">{project.summary}</p>
+    {project.shots && (
+      <a href={page ?? project.shots[0].src} class="mb-5 flex max-w-[360px] gap-3 no-underline">
+        {project.shots.map((s) => (
+          <img src={s.src} alt={s.alt} width="390" height="780" loading="lazy" class="block h-auto w-1/3 min-w-0 rounded-md border border-line">
+        ))}
+      </a>
+    )}
+    <p class="flex flex-wrap gap-x-5 gap-y-1 text-[15px]">
+      {page && <a href={page} class="link-accent">Read the case study →</a>}
+      {project.cta && <a href={project.cta.href} class="link-accent">{project.cta.label} →</a>}
+      {project.links.map((l) => <a href={l.href} class="text-muted no-underline hover:text-ink">{l.label} ↗</a>)}
+    </p>
+  </div>
+  {project.results && (
+    <dl class="self-start text-[14.5px]">
+      {project.results.map((r) => (
+        <div class="flex justify-between gap-4 border-b border-line py-2 first:border-t">
+          <dt class="text-muted">{r.label}</dt>
+          <dd class="num font-medium text-ink">{r.value}</dd>
+        </div>
+      ))}
+    </dl>
+  )}
+</article>

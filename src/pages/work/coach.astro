@@ -1,0 +1,164 @@
+---
+import Base from "../../layouts/Base.astro";
+import StudyHeader from "../../components/StudyHeader.astro";
+import Flow from "../../components/Flow.astro";
+import NextStudy from "../../components/NextStudy.astro";
+import StudyBody from "../../components/StudyBody.astro";
+
+const app = "https://github.com/juddg-commits/year-of-ai/blob/main/apps/health-coach";
+const shots = [
+  { src: "/images/coach-chat.jpg", alt: "Coach tab: the test user reports a workout and the coach logs it with the log_workout tool",
+    caption: "Coach: you report a workout in plain words; the agent calls log_workout, then answers from the numbers." },
+  { src: "/images/coach-workout.jpg", alt: "Workout tab: today's session, with bench press set at 165 lb because the last logged session was 160",
+    caption: "Workout: today's session, written from your log. Bench is 165 because Friday was 160 at effort 8." },
+  { src: "/images/coach-journey.jpg", alt: "Journey tab: level 4, XP and daily quests computed from the logs",
+    caption: "Journey: level, XP and quests, recomputed from the log files on every request." },
+];
+const parts = [
+  { name: "Phone app", what: "One HTML file with three tabs. It installs to the home screen, and a service worker caches the app shell so it opens offline. Every decision is made on the server." },
+  { name: "API", what: "FastAPI, 19 routes: chat, history, the weekly program, today's workout, finishing a workout, progress, the game state, form videos and login." },
+  { name: "Agent engine", what: "The system prompt in three blocks, cached frozen part first; 7 tools; a loop of at most 8 rounds per message. A failed turn is rolled back, and after 120 messages the conversation is saved to memory and starts fresh." },
+  { name: "Programming", what: "The weekly program and each day's session come back as JSON that must match a schema. Loads come from the lift history, parsed from the logs in both the simulator's format and a real one." },
+  { name: "Game layer", what: "XP, levels, quests, streaks, gear and trophies, derived from the log files on every request and never stored as a counter." },
+  { name: "Form videos", what: "YouTube Data API search, re-ranked by title match and form words, with junk filtered out. Any failure falls back to a plain YouTube link." },
+  { name: "Storage", what: "Plain markdown logs in one data folder, kept out of git. On a server, the folder sits on a volume so redeploys keep it." },
+  { name: "Security and cost", what: "A password gate (HttpOnly cookie, rate-limited login), a required header so other sites can't trigger paid calls, and a log of every model call's tokens, cache hits and dollars." },
+];
+const loop = [
+  { name: "Your message", who: "You", text: "Anything: a workout you just did, a meal, a weigh-in, or \"how am I doing?\"" },
+  { name: "The model decides", who: "Claude, with the full context", text: "It sees the coaching rules, your profile and recent sessions, and today: the date, your plan, the workout card on screen, and trends computed in code." },
+  { name: "A tool call", who: "One of 7 tools", text: "log_workout, log_meal, log_weight, save_profile, save_note, save_plan or mark_plan_kept. Logging only happens through a tool." },
+  { name: "The result goes back", who: "Code", text: "The app saves it and hands the result back to the model. The loop repeats until it answers in text, at most 8 rounds." },
+  { name: "Guards", who: "Code", text: "A failed turn is rolled back. A reply that says \"Logged\" with no tool call gets one hidden check asking for the call." },
+];
+---
+<Base title="Coach" description="Coach, a full-stack AI fitness app: a FastAPI backend, an installable phone app, and an agent that logs workouts, meals and weigh-ins through 7 tools. Tested by a simulated user for ten days at a time.">
+  <div class="container-page">
+    <StudyHeader
+      title="Coach"
+      pitch="A full-stack AI fitness app I designed and built. You talk to it like a trainer and it acts: it logs your workouts, meals and weigh-ins, writes each day's session from the weights you actually lifted, and remembers you between sessions. A simulated user runs it through ten days to test every change."
+      facts={[
+        { label: "Built", value: "August to September 2026" },
+        { label: "Stack", value: "Python, FastAPI, Claude API (Opus), YouTube Data API, HTML/CSS/JS" },
+        { label: "Size", value: "About 4,600 lines of code and tests, 19 API routes" },
+        { label: "Tested by", value: "37 offline tests and a 10-day simulated user, 16 runs" },
+        { label: "Built with", value: "Claude Code as my pair programmer" },
+      ]}
+      links={[
+        { label: "Code", href: "https://github.com/juddg-commits/year-of-ai/tree/main/apps/health-coach" },
+        { label: "Design notes and every run", href: `${app}/DESIGN.md` },
+      ]}
+    />
+
+    <div class="-mx-5 mt-10 overflow-x-auto px-5 pb-2 md:mx-0 md:overflow-visible md:px-0" tabindex="0" role="region" aria-label="Screenshots of the app">
+      <div class="flex w-max gap-5 md:grid md:w-auto md:grid-cols-3 md:gap-8">
+        {shots.map((s) => (
+          <figure class="w-[240px] md:w-auto">
+            <img src={s.src} alt={s.alt} width="390" height="780" class="block h-auto w-full rounded-lg border border-line">
+            <figcaption class="mt-3 text-[14px] leading-snug text-muted">{s.caption}</figcaption>
+          </figure>
+        ))}
+      </div>
+    </div>
+    <p class="mt-4 text-[13.5px] text-muted">Screens from the simulated test user (run 16, day 8), not a real person's data.</p>
+
+    <StudyBody toc={[{ id: "whats-under-it", label: "What's under it" }, { id: "the-results", label: "The results" }, { id: "how-it-works", label: "How one message works" }, { id: "how-a-fake-user-tests-it", label: "How a fake user tests it" }, { id: "what-broke-and-what-fixed-it", label: "What broke, and what fixed it" }, { id: "known-issues", label: "Known issues" }, { id: "how-i-built-it", label: "How I built it" }]}>
+
+    <div class="study">
+      <h2 id="whats-under-it">What's under it</h2>
+      <p>The model is one part of eight. Most of the work was everything around it: the parts that make the agent's actions real, keep its answers tied to the data, and stop it from costing money it shouldn't.</p>
+      <table class="data-table">
+        <thead><tr><th>Part</th><th>What it does</th></tr></thead>
+        <tbody>
+          {parts.map((p) => <tr><td class="whitespace-nowrap font-medium text-ink">{p.name}</td><td>{p.what}</td></tr>)}
+        </tbody>
+      </table>
+
+      <h2 id="the-results">The results</h2>
+      <p>From 16 simulated ten-day runs in September 2026. A scorecard of 13 checks grades each run, and it can re-score any old run for free, so these compare like for like.</p>
+      <table class="data-table">
+        <thead><tr><th>What</th><th>Result</th><th>Measured on</th></tr></thead>
+        <tbody>
+          <tr><td>Scorecard, first run</td><td class="n">7 of 13</td><td>Run 1</td></tr>
+          <tr><td>Scorecard, last 5 runs</td><td class="n">13 of 13 in 3</td><td>Runs 12 to 16; the other two scored 12 and 9</td></tr>
+          <tr><td>Cost of the same ten days</td><td class="n">$2.07 → $1.23–1.35</td><td>Run 1 vs. the full runs among 12 to 16</td></tr>
+          <tr><td>Asks for bodyweight before the first weigh-in</td><td class="n">4–5 → 0</td><td>Runs 8, 9 and 11 vs. runs 12 to 16</td></tr>
+          <tr><td>Bugs found and fixed in two QA passes</td><td class="n">25</td><td>Before shipping</td></tr>
+        </tbody>
+      </table>
+
+      <h2 id="how-it-works">How one message works</h2>
+      <p>Each message runs a small loop: the model decides, code acts, and the result goes back to the model until it answers.</p>
+    </div>
+    <div class="max-w-[68ch]"><Flow label="One turn of the coach's agent loop" steps={loop} /></div>
+
+    <div class="study">
+      <h3>Give the model the data; don't make it remember or compute</h3>
+      <p>Most wrong answers in the early runs traced back to data the model never saw. So the facts are computed in code and put in front of it:</p>
+      <ul>
+        <li><strong>Every date carries its weekday and age</strong> ("Wed 2026-09-16 (7 days ago)"). Without them, the first run called 8 days "three weeks."</li>
+        <li><strong>Weight trends and weekly averages are computed</strong>, with a note when it's too early to call a trend.</li>
+        <li><strong>Lift history covers every logged session</strong>, not just the last 10, so the starting point never scrolls out of view.</li>
+        <li><strong>Empty sections say so.</strong> With no weigh-ins yet, a missing section read like a blocker, and the coach kept asking for bodyweight. Now it says there are none yet and nothing waits on one.</li>
+      </ul>
+
+      <h3>Frozen first, changing last</h3>
+      <p>The system prompt is three blocks: the coaching rules (the same bytes every time, not even today's date), then the profile and recent sessions, then today. Only the part that changed gets billed at full price. The first run paid full price on 330,704 input tokens for $2.07. Run 16 paid full price on 13,248, read 305,847 from the cache at a tenth of the price, and cost $1.35.</p>
+
+      <h3>Progress you can't fake</h3>
+      <p>There's a game layer (XP, levels, quests), but it's computed from the log files on every request and never stored as a counter. A tap can't mint progress; only a logged workout, meal or weigh-in can.</p>
+
+      <h2 id="how-a-fake-user-tests-it">How a fake user tests it</h2>
+      <p>Chatting with the coach a few times tells you very little. So <code>simulate.py</code> plays a scripted user against the real app for ten days: 27 messages, plus the weekly program and workout cards. The user is 21, 5'10", about 184 lb, wants to lose 10 lb and bench 185, and has left-knee tendinitis that lunges and split squats flare up.</p>
+      <ul>
+        <li><strong>A fake clock.</strong> Day 8 really is "next Monday" to the app, so week two has a real week one behind it.</li>
+        <li><strong>Fake data only.</strong> Each run writes to its own folder and refuses to start if the app points anywhere else.</li>
+        <li><strong>A hard budget.</strong> Before every call, it stops the run if the biggest call so far could push spending past the limit.</li>
+        <li><strong>A control user.</strong> The same ten days with only the knee removed, so any difference comes from the injury. The coach said yes to lunges and never invented an injury.</li>
+        <li><strong>A scorecard of rules, not a model as judge.</strong> A model's verdict can change when nothing changed. Thirteen string checks give the same answer every time, cost nothing, and print what they saw.</li>
+      </ul>
+    </div>
+
+    <figure class="sample my-6 max-w-[68ch]">
+      <p class="who">Test user, day 10</p>
+      <p>how am I doing overall? weight trend, bench progress, and am I hitting my protein?</p>
+      <p class="who mt-5">Coach</p>
+      <p><strong>Weight</strong> — 184.2 → 182.8 over 8 days, 4 weigh-ins. Last-7-day average 183.5 vs 184.2 the week before. Directionally right, but under two weeks of data is too early to call a trend.</p>
+      <p><strong>Bench</strong> — the strongest part of your file. 155x5x3 → 160x5x3 → 165x5x3 in 9 days, and effort went <em>down</em> from 8 to 7 on the heavier bar.</p>
+      <p><strong>Protein</strong> — this is the hole. Three logged days in the last week, best was 39 g against 175.</p>
+      <figcaption class="mt-3 text-[13.5px] text-muted">From simulation run 16, lightly trimmed. Every number came from the test user's logs, computed in code.</figcaption>
+    </figure>
+
+    <div class="study">
+      <h2 id="what-broke-and-what-fixed-it">What broke, and what fixed it</h2>
+      <table class="data-table">
+        <thead><tr><th>What the runs caught</th><th>The fix</th></tr></thead>
+        <tbody>
+          <tr><td>The chat gave different weights than its own workout card, and called 8 days "three weeks." (Run 1)</td><td>Today's card goes in the prompt; every date carries its weekday and age.</td></tr>
+          <tr><td>It said "we locked it" about a plan the user never answered.</td><td>Saved sessions now say when he didn't reply.</td></tr>
+          <tr><td>It typed "[log_workout] Logged" instead of calling the tool, and saved nothing. It learned the marker from its own saved chats. (Run 5)</td><td>Tool calls stay out of the transcripts it reads back.</td></tr>
+          <tr><td>It asked for bodyweight in 4 to 5 replies before the first weigh-in. (Runs 8, 9, 11)</td><td>The context says nothing waits on it: 0 asks since.</td></tr>
+          <tr><td>It said "Logged: 3 slices pepperoni" with no tool call. (Run 13)</td><td>Code catches "Logged" with no tool in the turn and asks once for the call.</td></tr>
+          <tr><td>A run lost most of day 1 to refused requests, and the app kept no reason. (Run 14)</td><td>Every failed call is logged; a refused conversation is saved and retried once.</td></tr>
+          <tr><td>Lift history passed every simulated run and read nothing from a real log. The simulator wrote "140x8x3"; a real log says "3x8 @140."</td><td>It reads both now. A simulator only tests what it types.</td></tr>
+          <tr><td>The form-video feature fell back to plain links for a month because the API key was the wrong kind.</td><td>Errors are logged instead of swallowed; integrations get one real test call.</td></tr>
+        </tbody>
+      </table>
+
+      <h2 id="known-issues">Known issues</h2>
+      <ul>
+        <li>Some answers aren't saved on the turn they're given. They get saved later, but the tool check on that message fails.</li>
+        <li>The coach no longer asks for a weigh-in at all. It waits until the user reports one.</li>
+        <li>The "Logged" check and the retry have only been proven by offline tests, not in a live run yet.</li>
+        <li>One scripted user. The scorecard only knows failures a run has already shown.</li>
+      </ul>
+
+      <h2 id="how-i-built-it">How I built it</h2>
+      <p>I built it with Claude Code as my pair programmer between August and September 2026. I designed the product, the tools and the checks, tested it on my own training logs, read every simulated transcript, chose each fix, and re-ran the simulation until the results held up across repeat runs.</p>
+    </div>
+
+    </StudyBody>
+
+    <NextStudy href="/work/agent-fleet/" title="Agent fleet" text="One orchestrator running my agents as tools, with a person approving anything that costs money." />
+  </div>
+</Base>

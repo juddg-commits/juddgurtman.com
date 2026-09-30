@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://juddgurtman.com/sitemap-index.xml
