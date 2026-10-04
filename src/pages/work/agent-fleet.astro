@@ -21,7 +21,7 @@ const steps = [
       facts={[
         { label: "Shipped", value: "September 2026" },
         { label: "Stack", value: "Python, Model Context Protocol (MCP)" },
-        { label: "Agents connected", value: "The research agent, so far" },
+        { label: "Agents connected", value: "The research agent and the code fixer, so far" },
         { label: "Built with", value: "Claude Code as my pair programmer" },
       ]}
       links={[
@@ -42,7 +42,7 @@ const steps = [
       <table class="data-table">
         <thead><tr><th>Tool</th><th>What it does</th><th>Cost</th></tr></thead>
         <tbody>
-          <tr><td><code>research</code></td><td>Runs the <a href="/work/research-agent/">research agent</a>: a brief where every sentence cites its source.</td><td class="n">~$1.25, 2–3 min</td></tr>
+          <tr><td><code>research</code></td><td>Runs the <a href="/work/research-agent/">research agent</a>: a brief where every sentence cites its source. Cost and time measured on a two-part question with the shipped code (run of Sep 28).</td><td class="n">$0.37, 7.5 min</td></tr>
           <tr><td><code>recent_research</code></td><td>Lists past briefs, so a caller can reuse one instead of paying again.</td><td class="n">Free</td></tr>
         </tbody>
       </table>

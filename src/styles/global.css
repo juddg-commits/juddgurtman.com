@@ -96,6 +96,7 @@
   .data-table th { color: var(--muted); font-weight: 500; font-size: 13.5px; border-bottom-color: var(--ink); }
   .data-table td.n { font-family: var(--font-mono); font-feature-settings: "tnum"; color: var(--ink); white-space: nowrap; }
   .data-table td:last-child, .data-table th:last-child { padding-right: 0; }
+  @media (max-width: 480px) { .data-table td.n { white-space: normal; } }
 
   /* Real output from the apps, shown as-is. */
   .sample { border: 1px solid var(--line); background: var(--surface); border-radius: 6px; padding: 20px 22px; font-size: 15px; }

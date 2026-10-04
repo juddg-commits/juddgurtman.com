@@ -32,7 +32,7 @@ const page = project.slug ? `/work/${project.slug}/` : undefined;
       {project.results.map((r) => (
         <div class="flex justify-between gap-4 border-b border-line py-2 first:border-t">
           <dt class="text-muted">{r.label}</dt>
-          <dd class="num font-medium text-ink">{r.value}</dd>
+          <dd class="num whitespace-nowrap font-medium text-ink">{r.value}</dd>
         </div>
       ))}
     </dl>

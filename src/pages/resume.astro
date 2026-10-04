@@ -19,16 +19,16 @@ const projects = [
     name: "Coach: full-stack AI fitness app", href: "https://juddgurtman.com/work/coach/", stack: "Python, FastAPI, Claude API", when: "Aug to Sep 2026",
     points: [
       "Built a FastAPI backend (19 routes), an installable phone front end and a Claude agent that acts through 7 tools: it logs workouts, meals and weigh-ins and writes each day's session from logged lifts.",
-      "Scored the agent with a 10-day simulated user (fake clock, spending cap) and 13 automated checks: 7/13 on the first run, 13/13 in 3 of the last 5. 37 offline tests; 25 bugs fixed in two QA passes.",
-      "Cut full-price input tokens 96% by restructuring the prompt for caching; the same ten-day test fell from $2.07 to $1.35.",
+      "Scored the agent with a 10-day simulated user (fake clock, spending cap) and 13 automated checks: 7/13 on the first run, 13/13 in 3 of the last 5. 37 offline tests.",
+      "Cut full-price input tokens 96% with a cache-first prompt; the ten-day test fell from $2.07 (run 1) to $1.35 (run 16).",
     ],
   },
   {
     name: "Research agent: cited research briefs", href: "https://juddgurtman.com/work/research-agent/", stack: "Python, Claude API, web search", when: "Sep 2026",
     points: [
-      "Answers open questions with a brief: researches the parts in parallel, checks every claim against its source quote, and cites nearly every sentence (45 of 46, 0 invented sources).",
-      "Counted causes before fixing: 76 to 88% of weak claims came from quotes cut off at 150 characters; recovering full sentences cut them from 64% to 41% in a controlled replay.",
-      "Cut cost per question from $1.68 to $1.25 and runtime from 6m40s to 2m29s, guided by a per-stage cost ledger.",
+      "Answers open questions with a brief: researches the parts in parallel, checks every claim against its source quote, and cites nearly every sentence (45 of 46 on the tuned run; 0 invented sources in any run).",
+      "Counted causes before fixing: in three runs, 76 to 88% of weak claims came from quotes cut off at 150 characters; recovering full sentences cut them from 66% to 54% in a saved replay.",
+      "Cut cost per question from $1.68 to $1.25 and runtime from 6m40s to 2m29s (first vs. tuned run) with a per-stage ledger.",
     ],
   },
   {

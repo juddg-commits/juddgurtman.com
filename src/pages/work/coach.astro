@@ -82,8 +82,7 @@ const loop = [
           <tr><td>Scorecard, first run</td><td class="n">7 of 13</td><td>Run 1</td></tr>
           <tr><td>Scorecard, last 5 runs</td><td class="n">13 of 13 in 3</td><td>Runs 12 to 16; the other two scored 12 and 9</td></tr>
           <tr><td>Cost of the same ten days</td><td class="n">$2.07 → $1.23–1.35</td><td>Run 1 vs. the full runs among 12 to 16</td></tr>
-          <tr><td>Asks for bodyweight before the first weigh-in</td><td class="n">4–5 → 0</td><td>Runs 8, 9 and 11 vs. runs 12 to 16</td></tr>
-          <tr><td>Bugs found and fixed in two QA passes</td><td class="n">25</td><td>Before shipping</td></tr>
+          <tr><td>Asks for bodyweight before the first weigh-in</td><td class="n">4–5 → 0</td><td>Runs 8, 9 and 11 vs. runs 12, 13, 15 and 16</td></tr>
         </tbody>
       </table>
 
@@ -135,13 +134,13 @@ const loop = [
         <thead><tr><th>What the runs caught</th><th>The fix</th></tr></thead>
         <tbody>
           <tr><td>The chat gave different weights than its own workout card, and called 8 days "three weeks." (Run 1)</td><td>Today's card goes in the prompt; every date carries its weekday and age.</td></tr>
-          <tr><td>It said "we locked it" about a plan the user never answered.</td><td>Saved sessions now say when he didn't reply.</td></tr>
+          <tr><td>It said "we locked it" about a plan the user never answered. (Run 2)</td><td>Saved sessions now say when he didn't reply.</td></tr>
           <tr><td>It typed "[log_workout] Logged" instead of calling the tool, and saved nothing. It learned the marker from its own saved chats. (Run 5)</td><td>Tool calls stay out of the transcripts it reads back.</td></tr>
-          <tr><td>It asked for bodyweight in 4 to 5 replies before the first weigh-in. (Runs 8, 9, 11)</td><td>The context says nothing waits on it: 0 asks since.</td></tr>
+          <tr><td>It asked for bodyweight in 4 to 5 replies before the first weigh-in. (Runs 8, 9, 11)</td><td>The context says nothing waits on it, and a new rule lets skipped questions go: 0 asks in runs 12, 13, 15 and 16.</td></tr>
           <tr><td>It said "Logged: 3 slices pepperoni" with no tool call. (Run 13)</td><td>Code catches "Logged" with no tool in the turn and asks once for the call.</td></tr>
           <tr><td>A run lost most of day 1 to refused requests, and the app kept no reason. (Run 14)</td><td>Every failed call is logged; a refused conversation is saved and retried once.</td></tr>
           <tr><td>Lift history passed every simulated run and read nothing from a real log. The simulator wrote "140x8x3"; a real log says "3x8 @140."</td><td>It reads both now. A simulator only tests what it types.</td></tr>
-          <tr><td>The form-video feature fell back to plain links for a month because the API key was the wrong kind.</td><td>Errors are logged instead of swallowed; integrations get one real test call.</td></tr>
+          <tr><td>The form-video feature quietly fell back to plain links because the API key was the wrong kind.</td><td>Errors are logged instead of swallowed; integrations get one real test call.</td></tr>
         </tbody>
       </table>
 

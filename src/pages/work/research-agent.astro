@@ -9,7 +9,7 @@ const app = "https://github.com/juddg-commits/year-of-ai/blob/main/apps/research
 const steps = [
   { name: "Plan", who: "Opus 5, structured output", text: "Breaks the question into 2 to 4 sub-questions. Each one has to stand alone, because each worker only ever sees its own." },
   { name: "Research", who: "Sonnet 5, one worker each, in parallel", text: "Each worker runs up to 3 web searches and writes cited prose. Code turns every citation into an evidence record: claim, quote, URL." },
-  { name: "Recover quotes", who: "Plain code, no tokens", text: "The API cuts quotes off at about 150 characters. Code downloads the source page, finds the quote and completes its sentence." },
+  { name: "Recover quotes", who: "Plain code, no tokens", text: "The API caps quotes at about 150 characters. Code downloads the source page, finds the quote and completes its sentence." },
   { name: "Validate", who: "Opus 5, parallel batches", text: "A separate model checks each claim against its quote: supported, partial or unsupported. Unsupported claims are dropped." },
   { name: "Fit context", who: "Code, and a cheaper model if needed", text: "The writer sees compact notes, never raw pages. Notes that run over budget are condensed per sub-question and keep their sources." },
   { name: "Write and audit", who: "Opus 5, then code", text: "A structured brief with [S#] citations. Code strips citations to sources that don't exist and counts uncited sentences." },
@@ -23,7 +23,7 @@ const steps = [
       facts={[
         { label: "Shipped", value: "September 2026" },
         { label: "Stack", value: "Python, Claude API (Opus 5 and Sonnet 5), web search" },
-        { label: "Per question", value: "About $1.25 and 2 to 3 minutes" },
+        { label: "Per question", value: "$0.37 and 7.5 minutes for a two-part question on the shipped code (run of Sep 28)" },
         { label: "Built with", value: "Claude Code as my pair programmer" },
       ]}
       links={[
@@ -37,16 +37,16 @@ const steps = [
 
     <div class="study">
       <h2 id="the-results">The results</h2>
-      <p>Measured on real runs in September 2026. Before and after compare the same question or the same evidence, so the only thing that changed is the fix.</p>
+      <p>Measured on saved runs from September 28, 2026, and a replay saved on October 4. Before and after compare the same question or the same claims, so the only thing that changed is the fix.</p>
       <table class="data-table">
         <thead><tr><th>What</th><th>Before</th><th>After</th><th>Measured on</th></tr></thead>
         <tbody>
-          <tr><td>Weakly supported ("partial") claims</td><td class="n">64%</td><td class="n">41%</td><td>A controlled replay on the same evidence</td></tr>
-          <tr><td>Sentences with a citation</td><td class="n"></td><td class="n">45 of 46</td><td>The latest run</td></tr>
-          <tr><td>Invented sources</td><td class="n"></td><td class="n">0</td><td>The latest run</td></tr>
-          <tr><td>Cost per question</td><td class="n">$1.68</td><td class="n">$1.25</td><td>The same question, before and after tuning</td></tr>
-          <tr><td>Time per question</td><td class="n">6 min 40 s</td><td class="n">2 min 29 s</td><td>The same question</td></tr>
-          <tr><td>What the writer reads</td><td class="n">~194k tokens</td><td class="n">~11.6k</td><td>One run: raw search results vs. compact notes</td></tr>
+          <tr><td>Weakly supported ("partial") claims</td><td class="n">66%</td><td class="n">54%</td><td>A saved replay of the tuned run's 116 claims (Oct 4): API quotes vs. recovered quotes</td></tr>
+          <tr><td>Sentences with a citation</td><td class="n"></td><td class="n">45 of 46</td><td>The tuned run (Sep 28). The later runs: 28 of 28, 33 of 33, 24 of 27</td></tr>
+          <tr><td>Invented sources</td><td class="n"></td><td class="n">0</td><td>Every saved run</td></tr>
+          <tr><td>Cost per question</td><td class="n">$1.68</td><td class="n">$1.25</td><td>The same question: the first run vs. the tuned run (Sep 28)</td></tr>
+          <tr><td>Time per question</td><td class="n">6 min 40 s</td><td class="n">2 min 29 s</td><td>The same two runs</td></tr>
+          <tr><td>What the writer reads</td><td class="n">~194k tokens</td><td class="n">~11.6k</td><td>The tuned run: raw search results vs. compact notes</td></tr>
         </tbody>
       </table>
 
@@ -68,18 +68,18 @@ const steps = [
     <div class="study">
       <h2 id="what-broke">What broke</h2>
 
-      <h3>It found zero evidence on the first run.</h3>
-      <p>The newest version of the web search tool routes results through a code sandbox, and it came back with 0 citations and took 150 seconds per worker. I only found out by dumping the raw response for one worker. The older search tool returned 18 cited claims in 29 seconds on the same sub-question at the same cost, so I pinned it. For an agent built on provenance, citations matter more than the newest tool.</p>
+      <h3>The newest search tool returned no citations.</h3>
+      <p>The newest version of the web search tool routes results through a code sandbox, and it came back with no citations at all. I only found out by dumping the raw response for one worker. The older search tool returned cited claims on the same sub-question, so I pinned it. For an agent built on provenance, citations matter more than the newest tool.</p>
 
       <h3>My planned fix was aimed at the wrong cause.</h3>
-      <p>Too many claims came back "partial." My plan was to show the checker all of a claim's quotes at once. Before building that, I counted why claims were partial across three runs: <strong>76 to 88% had a quote that was cut off</strong> at about 150 characters, often right before the number the claim was about. The worker had read the whole page; only the excerpt was short.</p>
-      <p>So the agent now downloads the page with a plain HTTP request and completes the sentence. Matching has to work on words, not characters, because the quote is markdown and the page isn't. Real Wikipedia pages exposed edge cases my first tests missed (link targets, <code>[7]</code> markers, two excerpts glued into one), and handling them raised recovery on one run from 61 to 73 of 81 cut-off quotes. On a controlled replay with the same evidence, partial claims fell from 64% to 41% and supported claims rose from 31% to 54%.</p>
+      <p>Too many claims came back "partial." My plan was to show the checker all of a claim's quotes at once. Before building that, I counted why claims were partial across three runs: <strong>76 to 88% had a quote that was cut off</strong> at about 150 characters. The worker had read the whole page; only the excerpt was short.</p>
+      <p>So the agent now downloads the page with a plain HTTP request and completes the sentence. Matching has to work on words, not characters, because the quote is markdown and the page isn't. Real Wikipedia pages exposed edge cases my first tests missed (link targets, <code>[7]</code> markers, two excerpts glued into one), and handling them recovered more of the cut-off quotes. On a saved replay of the tuned run's 116 claims (October 4), partial claims fell from 66% to 54% and supported claims rose from 29% to 41%.</p>
 
       <h3>The first run cost $1.68 and took almost 7 minutes.</h3>
-      <p>A cost ledger for every step showed what I didn't expect: validation, which is basically a grading job, was a third of the cost and took 152 seconds. Lowering how hard it thinks and running its batches in parallel cut it to $0.35 and 31 seconds, and a question to $1.25 and 2 minutes 29 seconds.</p>
+      <p>A cost ledger for every step showed what I didn't expect: validation, which is basically a grading job, was a third of the cost and took 152 seconds. Lowering how hard it thinks and running its batches in parallel cut it to $0.35 and 31 seconds, partly because the tuned run had fewer claims to check. With a realistic size limit for the notes, so a condensing step stopped running, and a length target for the brief, the same question went to $1.25 and 2 minutes 29 seconds.</p>
 
       <h3>The grader isn't as consistent as it looks.</h3>
-      <p>In a second replay, 10 of the 48 claims whose quote hadn't changed still got a different verdict, all stricter. A claim looks weaker next to stronger ones in the same batch. So one run's small differences are noise, and any real evaluation has to repeat runs.</p>
+      <p>In the saved replay, 5 of the 56 claims whose quote hadn't changed still got a different verdict, all stricter. A claim looks weaker next to stronger ones in the same batch. So one run's small differences are noise, and any real evaluation has to repeat runs.</p>
 
       <h2 id="how-it-avoids-making-things-up">How it avoids making things up</h2>
       <ol>
@@ -91,9 +91,9 @@ const steps = [
 
       <h2 id="known-issues">Known issues</h2>
       <ul>
-        <li>Partial claims are still 41 to 50%. The main cause now is claims that bundle several facts from different sentences. Pages that block downloads or are PDFs keep their cut-off quote.</li>
+        <li>Partial claims are still about half: 54% in the saved replay. The main cause now is claims that bundle several facts from different sentences. Pages that block downloads or are PDFs keep their cut-off quote.</li>
         <li>A claim's verdict can change when the claims graded next to it change.</li>
-        <li>The brief ignores its length target: asked for 600 to 900 words, it writes about 2,000.</li>
+        <li>The brief can overshoot its length target: asked for 600 to 900 words, the tuned run wrote 1,204. The other runs stayed inside it.</li>
       </ul>
 
       <h2 id="how-i-built-it">How I built it</h2>

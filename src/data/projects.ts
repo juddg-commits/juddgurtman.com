@@ -27,8 +27,8 @@ export const aiProjects: Project[] = [
     results: [
       { label: "Tools the agent can call", value: "7" },
       { label: "Offline tests", value: "37" },
-      { label: "Scorecard, first run → best", value: "7 → 13 of 13" },
-      { label: "Cost of a 10-day test run", value: "$2.07 → $1.35" },
+      { label: "Scorecard, run 1 → 3 of the last 5 runs", value: "7 → 13 of 13" },
+      { label: "Cost of a 10-day test run, run 1 → run 16", value: "$2.07 → $1.35" },
     ],
     shots: [
       { src: "/images/coach-chat.jpg", alt: "Coach tab: the test user reports a workout and the coach logs it with the log_workout tool" },
@@ -45,10 +45,10 @@ export const aiProjects: Project[] = [
     summary:
       "Ask it a hard question. It splits the question into smaller ones, researches them in parallel, checks every claim against the exact quote it came from, and writes a brief where every sentence cites a source.",
     results: [
-      { label: "Weakly supported claims", value: "64% → 41%" },
-      { label: "Sentences with a citation", value: "45 / 46" },
-      { label: "Invented sources", value: "0" },
-      { label: "Cost per question", value: "$1.68 → $1.25" },
+      { label: "Weakly supported claims, saved replay", value: "66% → 54%" },
+      { label: "Sentences with a citation, tuned run", value: "45 / 46" },
+      { label: "Invented sources, every saved run", value: "0" },
+      { label: "Cost per question, first → tuned run", value: "$1.68 → $1.25" },
     ],
     links: [{ label: "Code", href: `${repo}/research-agent` }],
   },
@@ -60,7 +60,7 @@ export const aiProjects: Project[] = [
     summary:
       "One orchestrator runs my other agents as tools through an MCP server. Anything that spends money has a cap and waits for a person to approve it, and a stuck job gets shut down so it stops costing money.",
     results: [
-      { label: "Agents connected so far", value: "1" },
+      { label: "Agents connected so far", value: "2" },
       { label: "Search cap per question", value: "4 × 3" },
     ],
     links: [{ label: "Code", href: `${repo}/fleet-mcp` }],

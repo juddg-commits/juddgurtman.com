@@ -26,21 +26,21 @@ A full-stack AI fitness app. You talk to it like a trainer and it acts: an agent
 Read the case study → Code ↗
 Tools the agent can call: 7
 Offline tests: 37
-Scorecard, first run → best: 7 → 13 of 13
-Cost of a 10-day test run: $2.07 → $1.35
+Scorecard, run 1 → 3 of the last 5 runs: 7 → 13 of 13
+Cost of a 10-day test run, run 1 → run 16: $2.07 → $1.35
 Sept 2026 Python · Claude API · web search
 Research agent
 Ask it a hard question. It splits the question into smaller ones, researches them in parallel, checks every claim against the exact quote it came from, and writes a brief where every sentence cites a source.
 Read the case study → Code ↗
-Weakly supported claims: 64% → 41%
-Sentences with a citation: 45 / 46
-Invented sources: 0
-Cost per question: $1.68 → $1.25
+Weakly supported claims, saved replay: 66% → 54%
+Sentences with a citation, tuned run: 45 / 46
+Invented sources, every saved run: 0
+Cost per question, first → tuned run: $1.68 → $1.25
 Sept 2026 Python · MCP · orchestration
 Agent fleet
 One orchestrator runs my other agents as tools through an MCP server. Anything that spends money has a cap and waits for a person to approve it, and a stuck job gets shut down so it stops costing money.
 Read the case study → Code ↗
-Agents connected so far: 1
+Agents connected so far: 2
 Search cap per question: 4 × 3
 Sept 2026 JavaScript · Cloudflare Workers · Claude API
 Judd Bot
@@ -69,21 +69,21 @@ A full-stack AI fitness app. You talk to it like a trainer and it acts: an agent
 Read the case study → Code ↗
 Tools the agent can call: 7
 Offline tests: 37
-Scorecard, first run → best: 7 → 13 of 13
-Cost of a 10-day test run: $2.07 → $1.35
+Scorecard, run 1 → 3 of the last 5 runs: 7 → 13 of 13
+Cost of a 10-day test run, run 1 → run 16: $2.07 → $1.35
 Sept 2026 Python · Claude API · web search
 Research agent
 Ask it a hard question. It splits the question into smaller ones, researches them in parallel, checks every claim against the exact quote it came from, and writes a brief where every sentence cites a source.
 Read the case study → Code ↗
-Weakly supported claims: 64% → 41%
-Sentences with a citation: 45 / 46
-Invented sources: 0
-Cost per question: $1.68 → $1.25
+Weakly supported claims, saved replay: 66% → 54%
+Sentences with a citation, tuned run: 45 / 46
+Invented sources, every saved run: 0
+Cost per question, first → tuned run: $1.68 → $1.25
 Sept 2026 Python · MCP · orchestration
 Agent fleet
 One orchestrator runs my other agents as tools through an MCP server. Anything that spends money has a cap and waits for a person to approve it, and a stuck job gets shut down so it stops costing money.
 Read the case study → Code ↗
-Agents connected so far: 1
+Agents connected so far: 2
 Search cap per question: 4 × 3
 Sept 2026 JavaScript · Cloudflare Workers · Claude API
 Judd Bot
@@ -144,8 +144,7 @@ What · Result · Measured on
 Scorecard, first run · 7 of 13 · Run 1
 Scorecard, last 5 runs · 13 of 13 in 3 · Runs 12 to 16; the other two scored 12 and 9
 Cost of the same ten days · $2.07 → $1.23–1.35 · Run 1 vs. the full runs among 12 to 16
-Asks for bodyweight before the first weigh-in · 4–5 → 0 · Runs 8, 9 and 11 vs. runs 12 to 16
-Bugs found and fixed in two QA passes · 25 · Before shipping
+Asks for bodyweight before the first weigh-in · 4–5 → 0 · Runs 8, 9 and 11 vs. runs 12, 13, 15 and 16
 How one message works
 Each message runs a small loop: the model decides, code acts, and the result goes back to the model until it answers.
 - 01 Your message You
@@ -185,13 +184,13 @@ From simulation run 16, lightly trimmed. Every number came from the test user's 
 What broke, and what fixed it
 What the runs caught · The fix
 The chat gave different weights than its own workout card, and called 8 days "three weeks." (Run 1) · Today's card goes in the prompt; every date carries its weekday and age.
-It said "we locked it" about a plan the user never answered. · Saved sessions now say when he didn't reply.
+It said "we locked it" about a plan the user never answered. (Run 2) · Saved sessions now say when he didn't reply.
 It typed "[log_workout] Logged" instead of calling the tool, and saved nothing. It learned the marker from its own saved chats. (Run 5) · Tool calls stay out of the transcripts it reads back.
-It asked for bodyweight in 4 to 5 replies before the first weigh-in. (Runs 8, 9, 11) · The context says nothing waits on it: 0 asks since.
+It asked for bodyweight in 4 to 5 replies before the first weigh-in. (Runs 8, 9, 11) · The context says nothing waits on it, and a new rule lets skipped questions go: 0 asks in runs 12, 13, 15 and 16.
 It said "Logged: 3 slices pepperoni" with no tool call. (Run 13) · Code catches "Logged" with no tool in the turn and asks once for the call.
 A run lost most of day 1 to refused requests, and the app kept no reason. (Run 14) · Every failed call is logged; a refused conversation is saved and retried once.
 Lift history passed every simulated run and read nothing from a real log. The simulator wrote "140x8x3"; a real log says "3x8 @140." · It reads both now. A simulator only tests what it types.
-The form-video feature fell back to plain links for a month because the API key was the wrong kind. · Errors are logged instead of swallowed; integrations get one real test call.
+The form-video feature quietly fell back to plain links because the API key was the wrong kind. · Errors are logged instead of swallowed; integrations get one real test call.
 Known issues
 - Some answers aren't saved on the turn they're given. They get saved later, but the tool check on that message fails.
 - The coach no longer asks for a weigh-in at all. It waits until the user reports one.
@@ -209,17 +208,17 @@ Ask it a hard question and get back a short brief where every sentence cites a s
 Code ↗ Design notes ↗ Write-up ↗
 Shipped: September 2026
 Stack: Python, Claude API (Opus 5 and Sonnet 5), web search
-Per question: About $1.25 and 2 to 3 minutes
+Per question: $0.37 and 7.5 minutes for a two-part question on the shipped code (run of Sep 28)
 Built with: Claude Code as my pair programmer
 The results
-Measured on real runs in September 2026. Before and after compare the same question or the same evidence, so the only thing that changed is the fix.
+Measured on saved runs from September 28, 2026, and a replay saved on October 4. Before and after compare the same question or the same claims, so the only thing that changed is the fix.
 What · Before · After · Measured on
-Weakly supported ("partial") claims · 64% · 41% · A controlled replay on the same evidence
-Sentences with a citation · · 45 of 46 · The latest run
-Invented sources · · 0 · The latest run
-Cost per question · $1.68 · $1.25 · The same question, before and after tuning
-Time per question · 6 min 40 s · 2 min 29 s · The same question
-What the writer reads · ~194k tokens · ~11.6k · One run: raw search results vs. compact notes
+Weakly supported ("partial") claims · 66% · 54% · A saved replay of the tuned run's 116 claims (Oct 4): API quotes vs. recovered quotes
+Sentences with a citation · · 45 of 46 · The tuned run (Sep 28). The later runs: 28 of 28, 33 of 33, 24 of 27
+Invented sources · · 0 · Every saved run
+Cost per question · $1.68 · $1.25 · The same question: the first run vs. the tuned run (Sep 28)
+Time per question · 6 min 40 s · 2 min 29 s · The same two runs
+What the writer reads · ~194k tokens · ~11.6k · The tuned run: raw search results vs. compact notes
 How it works
 It's a fixed pipeline with model steps inside it, not one open-ended agent loop. Code sets the order; the model decides within each step what to search, what counts as support, and how to write. That keeps cost, time and failures predictable, and every step can be tested on its own.
 - 01 Plan Opus 5, structured output
@@ -227,7 +226,7 @@ Breaks the question into 2 to 4 sub-questions. Each one has to stand alone, beca
 - 02 Research Sonnet 5, one worker each, in parallel
 Each worker runs up to 3 web searches and writes cited prose. Code turns every citation into an evidence record: claim, quote, URL.
 - 03 Recover quotes Plain code, no tokens
-The API cuts quotes off at about 150 characters. Code downloads the source page, finds the quote and completes its sentence.
+The API caps quotes at about 150 characters. Code downloads the source page, finds the quote and completes its sentence.
 - 04 Validate Opus 5, parallel batches
 A separate model checks each claim against its quote: supported, partial or unsupported. Unsupported claims are dropped.
 - 05 Fit context Code, and a cheaper model if needed
@@ -240,24 +239,24 @@ Research brief, bottom line
 Ambient AI documentation is now deployed at enterprise scale across most large US health systems — Microsoft reports 400–600+ healthcare organizations on DAX/Dragon Copilot [S2][S3], and Abridge alone spans Kaiser Permanente's 40 hospitals and 24,000+ physicians, Johns Hopkins' 6,700 clinicians, and Mayo Clinic [S6][S8]. The burnout evidence is real but modest and uneven: the first RCT found improvements in burnout, work exhaustion and task load with any scribe but documentation-time savings only for one of two vendors [S15][S17], and a 5-system JAMA study found 13.4 fewer EHR minutes and 16.0 fewer documentation minutes per 8 patient-hours with no significant change in after-hours 'pajama time' [S24].
 Quoted as the agent wrote it. Read the full brief and its 53 sources ↗
 What broke
-It found zero evidence on the first run.
-The newest version of the web search tool routes results through a code sandbox, and it came back with 0 citations and took 150 seconds per worker. I only found out by dumping the raw response for one worker. The older search tool returned 18 cited claims in 29 seconds on the same sub-question at the same cost, so I pinned it. For an agent built on provenance, citations matter more than the newest tool.
+The newest search tool returned no citations.
+The newest version of the web search tool routes results through a code sandbox, and it came back with no citations at all. I only found out by dumping the raw response for one worker. The older search tool returned cited claims on the same sub-question, so I pinned it. For an agent built on provenance, citations matter more than the newest tool.
 My planned fix was aimed at the wrong cause.
-Too many claims came back "partial." My plan was to show the checker all of a claim's quotes at once. Before building that, I counted why claims were partial across three runs: 76 to 88% had a quote that was cut off at about 150 characters, often right before the number the claim was about. The worker had read the whole page; only the excerpt was short.
-So the agent now downloads the page with a plain HTTP request and completes the sentence. Matching has to work on words, not characters, because the quote is markdown and the page isn't. Real Wikipedia pages exposed edge cases my first tests missed (link targets, [7] markers, two excerpts glued into one), and handling them raised recovery on one run from 61 to 73 of 81 cut-off quotes. On a controlled replay with the same evidence, partial claims fell from 64% to 41% and supported claims rose from 31% to 54%.
+Too many claims came back "partial." My plan was to show the checker all of a claim's quotes at once. Before building that, I counted why claims were partial across three runs: 76 to 88% had a quote that was cut off at about 150 characters. The worker had read the whole page; only the excerpt was short.
+So the agent now downloads the page with a plain HTTP request and completes the sentence. Matching has to work on words, not characters, because the quote is markdown and the page isn't. Real Wikipedia pages exposed edge cases my first tests missed (link targets, [7] markers, two excerpts glued into one), and handling them recovered more of the cut-off quotes. On a saved replay of the tuned run's 116 claims (October 4), partial claims fell from 66% to 54% and supported claims rose from 29% to 41%.
 The first run cost $1.68 and took almost 7 minutes.
-A cost ledger for every step showed what I didn't expect: validation, which is basically a grading job, was a third of the cost and took 152 seconds. Lowering how hard it thinks and running its batches in parallel cut it to $0.35 and 31 seconds, and a question to $1.25 and 2 minutes 29 seconds.
+A cost ledger for every step showed what I didn't expect: validation, which is basically a grading job, was a third of the cost and took 152 seconds. Lowering how hard it thinks and running its batches in parallel cut it to $0.35 and 31 seconds, partly because the tuned run had fewer claims to check. With a realistic size limit for the notes, so a condensing step stopped running, and a length target for the brief, the same question went to $1.25 and 2 minutes 29 seconds.
 The grader isn't as consistent as it looks.
-In a second replay, 10 of the 48 claims whose quote hadn't changed still got a different verdict, all stricter. A claim looks weaker next to stronger ones in the same batch. So one run's small differences are noise, and any real evaluation has to repeat runs.
+In the saved replay, 5 of the 56 claims whose quote hadn't changed still got a different verdict, all stricter. A claim looks weaker next to stronger ones in the same batch. So one run's small differences are noise, and any real evaluation has to repeat runs.
 How it avoids making things up
 - Cite it or it doesn't count. Text without a citation never reaches the brief; it's logged as uncited.
 - A separate check of every claim against its quote. The checker judges support, not truth, and fails closed: a claim it skipped counts as unsupported. It caught real misattributions, like a Cleveland Clinic statistic cited to a Mass General Brigham quote.
 - The writer only sees checked notes and has to cite every factual sentence. Partial support has to be hedged.
 - Code audits the brief. It strips citations to sources that don't exist and counts sentences without one.
 Known issues
-- Partial claims are still 41 to 50%. The main cause now is claims that bundle several facts from different sentences. Pages that block downloads or are PDFs keep their cut-off quote.
+- Partial claims are still about half: 54% in the saved replay. The main cause now is claims that bundle several facts from different sentences. Pages that block downloads or are PDFs keep their cut-off quote.
 - A claim's verdict can change when the claims graded next to it change.
-- The brief ignores its length target: asked for 600 to 900 words, it writes about 2,000.
+- The brief can overshoot its length target: asked for 600 to 900 words, the tuned run wrote 1,204. The other runs stayed inside it.
 How I built it
 I built it with Claude Code as my pair programmer. It wrote most of the code. I picked what to build, tested it on real questions, measured every step, and decided which problems were worth fixing.
 Next case study Coach → An AI trainer tested by a fake user for ten days at a time.
@@ -270,7 +269,7 @@ My agents are separate apps, each with its own folder, tests and ship. A small M
 Code ↗
 Shipped: September 2026
 Stack: Python, Model Context Protocol (MCP)
-Agents connected: The research agent, so far
+Agents connected: The research agent and the code fixer, so far
 Built with: Claude Code as my pair programmer
 How it works
 Every agent follows one result contract: run its command line with --json, and it prints progress on one channel and exactly one JSON object on the other. The server only has to know that contract, not how each agent works inside.
@@ -286,7 +285,7 @@ The agent's stage lines ([3/6]...) become progress updates the caller can watch.
 Exactly one JSON object: status, output, error, cost in dollars, seconds, and the files it saved.
 The tools so far
 Tool · What it does · Cost
-research · Runs the research agent: a brief where every sentence cites its source. · ~$1.25, 2–3 min
+research · Runs the research agent: a brief where every sentence cites its source. Cost and time measured on a two-part question with the shipped code (run of Sep 28). · $0.37, 7.5 min
 recent_research · Lists past briefs, so a caller can reuse one instead of paying again. · Free
 Guarding the money
 - Caps a caller can't raise. A research call can ask for at most 4 sub-questions with 3 searches each. It can ask for less, never more.
@@ -387,12 +386,12 @@ Online courses completed: Google Data Analytics (Coursera); Analyzing and Visual
 AI projects, built with Claude Code github.com/juddg-commits/year-of-ai
 Coach: full-stack AI fitness app · Python, FastAPI, Claude API Aug to Sep 2026
 - Built a FastAPI backend (19 routes), an installable phone front end and a Claude agent that acts through 7 tools: it logs workouts, meals and weigh-ins and writes each day's session from logged lifts.
-- Scored the agent with a 10-day simulated user (fake clock, spending cap) and 13 automated checks: 7/13 on the first run, 13/13 in 3 of the last 5. 37 offline tests; 25 bugs fixed in two QA passes.
-- Cut full-price input tokens 96% by restructuring the prompt for caching; the same ten-day test fell from $2.07 to $1.35.
+- Scored the agent with a 10-day simulated user (fake clock, spending cap) and 13 automated checks: 7/13 on the first run, 13/13 in 3 of the last 5. 37 offline tests.
+- Cut full-price input tokens 96% with a cache-first prompt; the ten-day test fell from $2.07 (run 1) to $1.35 (run 16).
 Research agent: cited research briefs · Python, Claude API, web search Sep 2026
-- Answers open questions with a brief: researches the parts in parallel, checks every claim against its source quote, and cites nearly every sentence (45 of 46, 0 invented sources).
-- Counted causes before fixing: 76 to 88% of weak claims came from quotes cut off at 150 characters; recovering full sentences cut them from 64% to 41% in a controlled replay.
-- Cut cost per question from $1.68 to $1.25 and runtime from 6m40s to 2m29s, guided by a per-stage cost ledger.
+- Answers open questions with a brief: researches the parts in parallel, checks every claim against its source quote, and cites nearly every sentence (45 of 46 on the tuned run; 0 invented sources in any run).
+- Counted causes before fixing: in three runs, 76 to 88% of weak claims came from quotes cut off at 150 characters; recovering full sentences cut them from 66% to 54% in a saved replay.
+- Cut cost per question from $1.68 to $1.25 and runtime from 6m40s to 2m29s (first vs. tuned run) with a per-stage ledger.
 Agent fleet · Python, MCP Sep 2026
 - Built an MCP server that gives an orchestrator my research agent as a tool, with spending caps and approval before paid runs.
 Experience
