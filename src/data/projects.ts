@@ -72,7 +72,7 @@ export const aiProjects: Project[] = [
     summary:
       "The assistant on this site. Ask it about my work by voice or text: it answers only from a public list of facts, cites a source for every answer, takes you to any page you ask for, and says it doesn't know rather than guess. Code checks every answer before a visitor sees it.",
     results: [
-      { label: "Eval questions passed, last run", value: "99 / 100" },
+      { label: "Eval questions passed, run of Oct 4", value: "100 / 100" },
       { label: "Questions per visitor per minute", value: "6" },
     ],
     cta: { label: "Try it", href: "/ask/" },

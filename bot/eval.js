@@ -177,8 +177,20 @@ async function pool(items, size, fn) {
   return out;
 }
 
-const limit = Number(process.argv[2]) || CASES.length;
-const cases = CASES.slice(0, limit);
+const args = process.argv.slice(2);
+const limit = Number(args.find((a) => /^\d+$/.test(a))) || CASES.length;
+// A ceiling for the whole run: npm run eval -- --max-usd=2.50. A question that could push spending past it
+// isn't asked; it's reported as skipped, never counted as a pass.
+const MAX_USD = Number(args.find((a) => a.startsWith("--max-usd="))?.split("=")[1]) || 2.5;
+const all = CASES.slice(0, limit);
+// A second pass: npm run eval -- --retry=runs/eval-<stamp>.json asks again only what that run lost to an
+// error or the ceiling (a dropped connection isn't the bot's failure), then grades the full set together.
+const retryFile = args.find((a) => a.startsWith("--retry="))?.split("=")[1];
+const prior = retryFile ? JSON.parse(readFileSync(retryFile, "utf8")) : null;
+const key = (c) => JSON.stringify([c.q, c.history ?? null]);
+const priorRows = new Map((prior?.rows ?? []).map((r) => [key(r), r]));
+const cases = prior ? all.filter((c) => ["error", "skipped", undefined].includes(priorRows.get(key(c))?.result.kind)) : all;
+if (!cases.length) { console.log("Nothing to ask again."); process.exit(0); }
 const facts = ["./facts.md", "./site.md"].map((f) => readFileSync(new URL(f, import.meta.url), "utf8")).join("\n\n");
 // The API sometimes stalls a request for minutes (one healthy call took 237 s). A short timeout
 // turns those into fake failures, so: patient timeout, then a second pass over anything that dropped.
@@ -186,7 +198,9 @@ const claude = client(undefined, { maxRetries: 4, timeout: 240_000 });
 
 // The first call writes the cache; the rest read it, so run it alone.
 const attempt = (c) => ask(claude, facts, c.q, c.history);
-const first = await attempt(cases[0]);
+let spentSoFar = 0, biggest = 0;
+const track = (r) => { spentSoFar += r.cost_usd ?? 0; biggest = Math.max(biggest, r.cost_usd ?? 0); return r; };
+const first = track(await attempt(cases[0]));
 let done = 0;
 const tryCase = async (c) => {
   // The network drops long requests in storms here; a pause and a fresh try isn't a bot failure.
@@ -199,16 +213,20 @@ const tryCase = async (c) => {
   }
 };
 const rest = await pool(cases.slice(1), 2, async (c) => {   // 2 at a time: more kept dropping connections
-  const r = await tryCase(c);
+  if (spentSoFar + 2 * biggest > MAX_USD) return { kind: "skipped", answer: `not asked: the run's $${MAX_USD} ceiling`, sources: [], cost_usd: 0 };
+  const r = track(await tryCase(c));
   process.stderr.write(`\r${++done + 1}/${cases.length} `);
   return r;
 });
-const results = [first, ...rest];
+const asked = [first, ...rest];
+const fresh = new Map(cases.map((c, i) => [c, asked[i]]));
+const results = all.map((c) => fresh.get(c) ?? priorRows.get(key(c)).result);
+const thisPass = asked.reduce((sum, r) => sum + (r.cost_usd ?? 0), 0);
 
 let passed = 0;
-const rows = cases.map((c, i) => {
+const rows = all.map((c, i) => {
   const r = results[i];
-  const problems = r.kind === "error" ? [r.answer] : grade(c, r);
+  const problems = r.kind === "error" || r.kind === "skipped" ? [r.answer] : grade(c, r);
   if (!problems.length) passed++;
   console.log(`${problems.length ? "FAIL" : "PASS"}  ${c.q}`);
   console.log(`      [${r.kind}${r.fact_ids ? " " + r.fact_ids.join(",") : ""}${r.page ? " -> " + r.page : ""}] ${r.answer}`);
@@ -219,9 +237,10 @@ const rows = cases.map((c, i) => {
 const spent = results.reduce((sum, r) => sum + (r.cost_usd ?? 0), 0);
 const cacheReads = results.reduce((sum, r) => sum + (r.usage?.cache_read_input_tokens ?? 0), 0);
 const caught = results.filter((r) => r.dropped === "claude code credit").length;
-console.log(`\n${passed}/${cases.length} passed, $${spent.toFixed(4)}, ${cacheReads} tokens read from cache, ${caught} Claude Code credits removed by code`);
+const skipped = results.filter((r) => r.kind === "skipped").length;
+console.log(`\n${passed}/${all.length} passed, $${spent.toFixed(4)} (ceiling $${MAX_USD}${skipped ? `, ${skipped} skipped` : ""}${prior ? `; ${cases.length} asked again for $${thisPass.toFixed(4)}` : ""}), ${cacheReads} tokens read from cache, ${caught} Claude Code credits removed by code`);
 
 mkdirSync(new URL("./runs/", import.meta.url), { recursive: true });
 const stamp = new Date().toISOString().replace(/[:.]/g, "-");
 writeFileSync(new URL(`./runs/eval-${stamp}.json`, import.meta.url),
-  JSON.stringify({ passed, total: cases.length, cost_usd: spent, rows }, null, 1));
+  JSON.stringify({ passed, total: all.length, cost_usd: spent, max_usd: MAX_USD, skipped, retry_of: retryFile, asked_again: prior ? cases.length : undefined, this_pass_usd: thisPass, rows }, null, 1));

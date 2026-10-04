@@ -46,7 +46,7 @@ Sept 2026 JavaScript · Cloudflare Workers · Claude API
 Judd Bot
 The assistant on this site. Ask it about my work by voice or text: it answers only from a public list of facts, cites a source for every answer, takes you to any page you ask for, and says it doesn't know rather than guess. Code checks every answer before a visitor sees it.
 Try it → Code ↗
-Eval questions passed, last run: 99 / 100
+Eval questions passed, run of Oct 4: 100 / 100
 Questions per visitor per minute: 6
 Experience
 More →
@@ -89,7 +89,7 @@ Sept 2026 JavaScript · Cloudflare Workers · Claude API
 Judd Bot
 The assistant on this site. Ask it about my work by voice or text: it answers only from a public list of facts, cites a source for every answer, takes you to any page you ask for, and says it doesn't know rather than guess. Code checks every answer before a visitor sees it.
 Try it → Code ↗
-Eval questions passed, last run: 99 / 100
+Eval questions passed, run of Oct 4: 100 / 100
 Questions per visitor per minute: 6
 Data projects
 Data project Python · pandas · EIA data
@@ -405,7 +405,7 @@ Jay's Valet, Aspen · Valet lead, running shifts (part-time) 2022 to present
 Bosq, Aspen (Michelin-starred restaurant) · Food runner and server support Summer 2025
 Labor for a Neighbor, Aspen · Founder: window washing, yard work and hauling for neighbors Summer 2024
 Other projects
-- Judd Bot (JavaScript, Cloudflare Workers, Claude API): The voice and text assistant on juddgurtman.com. It answers only from a public fact list, cites sources, and passed 99 of 100 questions in its latest code-graded eval, including prompt-injection attempts.
+- Judd Bot (JavaScript, Cloudflare Workers, Claude API): The voice and text assistant on juddgurtman.com. It answers only from a public fact list, cites sources, and passed 100 of 100 questions in its Oct 4 code-graded eval, including prompt-injection attempts.
 - Fuel price volatility (Python, pandas): 26,000+ weekly EIA prices; the West Coast's gap to the U.S. average varies over 2x the Gulf Coast's.
 - Movie ratings (Python, APIs, SQLite): TMDb rates action and horror 0.7 to 0.8 points above OMDb; on drama they agree within 0.1.
 Leadership
