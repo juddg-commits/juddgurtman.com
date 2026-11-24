@@ -20,7 +20,7 @@ npm run ask -- "what has Judd built?"      # one question, about a cent
 npm run eval                               # the trick-question eval, paid
 ```
 
-`eval.js` asks 100 questions: ones the facts answer, hiring questions, private topics, company numbers I don't share, questions about other people, and prompt-injection attempts. Every check is code (the kind of answer, the fact IDs, strings that must never appear, answers short enough to hear), so a run is repeatable and free to re-read. Each run saves its answers to `runs/`.
+`eval.js` asks 111 questions (107 in the file, 4 in a git-ignored one): ones the facts answer, hiring questions, private topics, company numbers I don't share, questions about other people, and prompt-injection attempts. Every check is code (the kind of answer, the fact IDs, strings that must never appear, answers short enough to hear), so a run is repeatable and free to re-read. Each run saves its answers to `runs/`.
 
 ## On the site
 

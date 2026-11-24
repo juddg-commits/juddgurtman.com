@@ -62,7 +62,7 @@ Sept 2026 JavaScript · Cloudflare Workers · Claude API
 Judd Bot
 The assistant on this site. Ask it about my work by voice or text: it answers only from a public list of facts, cites a source for every answer, takes you to any page you ask for, and says it doesn't know rather than guess. Code checks every answer before a visitor sees it.
 Try it → Code ↗
-Eval questions passed, run of Oct 4: 100 / 100
+Eval questions passed, run of Nov 24: 111 / 111
 Questions per visitor per minute: 6
 Experience
 More →
@@ -121,7 +121,7 @@ Sept 2026 JavaScript · Cloudflare Workers · Claude API
 Judd Bot
 The assistant on this site. Ask it about my work by voice or text: it answers only from a public list of facts, cites a source for every answer, takes you to any page you ask for, and says it doesn't know rather than guess. Code checks every answer before a visitor sees it.
 Try it → Code ↗
-Eval questions passed, run of Oct 4: 100 / 100
+Eval questions passed, run of Nov 24: 111 / 111
 Questions per visitor per minute: 6
 Data projects
 Apr 2026 Python · pandas · EIA data
