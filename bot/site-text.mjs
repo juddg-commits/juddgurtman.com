@@ -18,6 +18,7 @@ export const PAGES = [
   ["/writing/", "Writing"],
   ["/about/", "About"],
   ["/resume/", "Resume"],
+  ["/work/lead-router/", "Lead router case study"],
 ];
 
 const ENTITIES = { amp: "&", lt: "<", gt: ">", quot: '"', apos: "'", nbsp: " ", rarr: "→", larr: "←", middot: "·" };

@@ -16,48 +16,53 @@ const contact = [
 ];
 const projects = [
   {
-    name: "Coach: full-stack AI fitness app", href: "https://juddgurtman.com/work/coach/", stack: "Python, FastAPI, Claude API", when: "Aug to Sep 2026",
+    name: "Lead router on Palantir Foundry", href: "https://juddgurtman.com/work/lead-router/", stack: "Ontology, AIP Logic, AIP Evals, Workshop, TypeScript, Claude", when: "Oct 2026",
     points: [
-      "Built a FastAPI backend (19 routes), an installable phone front end and a Claude agent that acts through 7 tools: it logs workouts, meals and weigh-ins and writes each day's session from logged lifts.",
-      "Scored the agent with a 10-day simulated user (fake clock, spending cap) and 13 automated checks: 7/13 on the first run, 13/13 in 3 of the last 5. 37 offline tests.",
-      "Cut full-price input tokens 96% with a cache-first prompt; the ten-day test fell from $2.07 (run 1) to $1.35 (run 16).",
+      "Built a lead router for a sample plumbing business: it classifies each lead, drafts a reply from customer, price and schedule records, and queues it for a person to approve, edit or reject. The classifier names the hazard, and code writes the safety steps.",
+      "Tested my SQL safety rule on blind leads written by a separate session: it caught 6 of 12 real hazards while the classifier got all 72 calls right, so I made the rule flag-only. No safety lead has missed its safety opening on any run.",
+      "Scored prompts v2 to v4 on the final key and one judge wording: calls with every field right rose from 79 to 99 of 168.",
     ],
   },
   {
     name: "Research agent: cited research briefs", href: "https://juddgurtman.com/work/research-agent/", stack: "Python, Claude API, web search", when: "Sep 2026",
     points: [
-      "Answers open questions with a brief: researches the parts in parallel, checks every claim against its source quote, and cites nearly every sentence (45 of 46 on the tuned run; 0 invented sources in any run).",
       "Counted causes before fixing: in three runs, 76 to 88% of weak claims came from quotes cut off at 150 characters; recovering full sentences cut them from 66% to 54% in a saved replay.",
-      "Cut cost per question from $1.68 to $1.25 and runtime from 6m40s to 2m29s (first vs. tuned run) with a per-stage ledger.",
     ],
   },
   {
-    name: "Agent fleet", href: "https://juddgurtman.com/work/agent-fleet/", stack: "Python, MCP", when: "Sep 2026",
+    name: "Coach: full-stack fitness app", href: "https://juddgurtman.com/work/coach/", stack: "Python, FastAPI, Claude API", when: "Aug to Sep 2026",
     points: [
-      "Built an MCP server that gives an orchestrator my research agent as a tool, with spending caps and approval before paid runs.",
+      "Built a FastAPI backend (19 routes), an installable phone front end and a Claude agent that acts through 7 tools: it logs workouts, meals and weigh-ins and writes each day's session from logged lifts.",
+    ],
+  },
+  {
+    name: "Fuel price volatility", href: "https://github.com/juddg-commits/fuel-price-volatility", stack: "Python, pandas", when: "Apr 2026",
+    points: [
+      "Compared 26,000+ weekly EIA fuel prices across regions: the West Coast's gap to the U.S. average varies over 2x the Gulf Coast's.",
+    ],
+  },
+  {
+    name: "Movie ratings", href: "https://github.com/juddg-commits/movie-ratings-analysis", stack: "Python, APIs, SQLite", when: "Dec 2025",
+    points: [
+      "Compared how two sources rate each film genre: TMDb rates action and horror 0.7 to 0.8 points above OMDb, and on drama they agree within 0.1.",
     ],
   },
 ];
 const internship = [
-  "Audited 29 KPIs across 4 dashboards (31 tabs), traced 7 inconsistencies to formulas and date filters, and made 8 consolidation recommendations; the team added disclaimers to the live dashboards and flagged one for a rebuild.",
   "Took my first failure-rate estimate to the process owner and re-cut outcomes into 4 categories (handled correctly, intended routing, caller error, true system error); the real rate was far lower, matching the team's.",
-  "Found why the data was hard to read: many call records had no linked Salesforce work order; classified calls by reason with AI and proposed a first-contact resolution metric.",
-  "Validated a Power BI model against Salesforce: sample-tested 10 records, then compared full populations across 2 tables; after my manager's review, changed my verdict and documented what my first check missed.",
   "Gave five presentations in six weeks, the last one to company leadership.",
+  "Audited 29 KPIs across 4 dashboards (31 tabs), traced 7 inconsistencies to formulas and date filters, and made 8 consolidation recommendations; the team added disclaimers to the live dashboards and flagged one for a rebuild.",
+  "Validated a Power BI model against Salesforce: sample-tested 10 records, then compared full populations across 2 tables; after my manager's review, changed my verdict and documented what my first check missed.",
+  "Found why the data was hard to read: many call records had no linked Salesforce work order; classified calls by reason with AI and proposed a first-contact resolution metric.",
 ];
 const jobs = [
-  { name: "Jay's Valet, Aspen", role: "Valet lead, running shifts (part-time)", when: "2022 to present" },
+  { name: "Jay's Valet, Aspen", role: "Valet lead (part-time)", when: "2022 to present", point: "Run shifts that range from 2 or 3 valets to more than 10, depending on the event." },
   { name: "Bosq, Aspen (Michelin-starred restaurant)", role: "Food runner and server support", when: "Summer 2025" },
-  { name: "Labor for a Neighbor, Aspen", role: "Founder: window washing, yard work and hauling for neighbors", when: "Summer 2024" },
-];
-const other = [
-  { name: "Judd Bot", stack: "JavaScript, Cloudflare Workers, Claude API", text: "The voice and text assistant on juddgurtman.com. It answers only from a public fact list, cites sources, and passed 100 of 100 questions in its Oct 4 code-graded eval, including prompt-injection attempts." },
-  { name: "Fuel price volatility", stack: "Python, pandas", text: "26,000+ weekly EIA prices; the West Coast's gap to the U.S. average varies over 2x the Gulf Coast's." },
-  { name: "Movie ratings", stack: "Python, APIs, SQLite", text: "TMDb rates action and horror 0.7 to 0.8 points above OMDb; on drama they agree within 0.1." },
+  { name: "Labor for a Neighbor, Aspen", role: "Founder", when: "Summer 2024", point: "Started and ran a window washing, yard work and hauling service: 20 to 40 customers in one summer with a crew of 3 to 5." },
 ];
 const skills = [
-  { label: "AI", text: "Claude API (tool use, structured outputs, prompt caching), MCP, multi-agent orchestration, LLM evaluation, Claude Code" },
   { label: "Code and data", text: "Python (pandas, NumPy, matplotlib), SQL, JavaScript, TypeScript, FastAPI, REST APIs, Git, GitHub Actions, Cloudflare Workers, Power BI (model validation), Salesforce, Excel" },
+  { label: "AI", text: "Claude API (tool use, structured outputs, prompt caching), MCP, multi-agent orchestration, LLM evaluation, Claude Code" },
   { label: "Interests", text: "Skiing, sports analytics, lacrosse, house music" },
 ];
 ---
@@ -74,7 +79,7 @@ const skills = [
         <p class="r-contact">
           {contact.map((c) => c.href ? <a href={c.href}>{c.label}</a> : <span>{c.label}</span>)}
         </p>
-        <p class="r-summary">Information Analysis senior (May 2027) who builds and evaluates LLM agents, and checks what the numbers are actually counting.</p>
+        <p class="r-summary">Information Analysis senior (May 2027) who checks what a number is actually counting, then builds and tests the fix.</p>
       </header>
 
       <section>
@@ -87,31 +92,27 @@ const skills = [
       </section>
 
       <section>
-        <h2>AI projects, built with Claude Code <a class="r-h2-link" href="https://github.com/juddg-commits/year-of-ai">github.com/juddg-commits/year-of-ai</a></h2>
-        {projects.map((p) => (
-          <div class="r-entry">
-            <p class="r-line"><span><strong><a href={p.href}>{p.name}</a></strong><em class="r-meta"> · {p.stack}</em></span><span>{p.when}</span></p>
-            <ul>{p.points.map((pt) => <li>{pt}</li>)}</ul>
-          </div>
-        ))}
-      </section>
-
-      <section>
         <h2>Experience</h2>
         <div class="r-entry">
           <p class="r-line"><span><strong>TrueSource, an OnPoint Group company</strong><em class="r-meta"> · Data Analytics Intern, remote</em></span><span>Jun to Jul 2026</span></p>
           <ul>{internship.map((pt) => <li>{pt}</li>)}</ul>
         </div>
         {jobs.map((j) => (
-          <p class="r-line r-job"><span><strong>{j.name}</strong><em class="r-meta"> · {j.role}</em></span><span>{j.when}</span></p>
+          <div class={j.point ? "r-entry" : undefined}>
+            <p class="r-line r-job"><span><strong>{j.name}</strong><em class="r-meta"> · {j.role}</em></span><span>{j.when}</span></p>
+            {j.point && <ul><li>{j.point}</li></ul>}
+          </div>
         ))}
       </section>
 
       <section>
-        <h2>Other projects</h2>
-        <ul>
-          {other.map((o) => <li><strong>{o.name}</strong> ({o.stack}): {o.text}</li>)}
-        </ul>
+        <h2>Projects</h2>
+        {projects.map((p) => (
+          <div class="r-entry">
+            <p class="r-line"><span><strong>{p.href ? <a href={p.href}>{p.name}</a> : p.name}</strong><em class="r-meta"> · {p.stack}</em></span><span>{p.when}</span></p>
+            <ul>{p.points.map((pt) => <li>{pt}</li>)}</ul>
+          </div>
+        ))}
       </section>
 
       <section>

@@ -2,7 +2,7 @@
 
 A small assistant for juddgurtman.com that answers questions about me from [facts.md](facts.md) and nothing else. I built it with JavaScript, Cloudflare Workers and the Claude API, with Claude Code as my pair programmer.
 
-- **Facts plus the site itself.** [facts.md](facts.md) holds the vetted facts, each with an ID and a public page that backs it up. [site.md](site.md) holds the text of every page on the site (P1 to P9), so the bot can answer anything the site says. If neither covers a question, the bot says "I don't know that one" and points to my email.
+- **Facts plus the site itself.** [facts.md](facts.md) holds the vetted facts, each with an ID and a public page that backs it up. [site.md](site.md) holds the text of every page on the site (P1 to P10), so the bot can answer anything the site says. If neither covers a question, the bot says "I don't know that one" and points to my email.
 - **Code checks the model.** Claude Opus 5 returns JSON: whether it can answer, the answer, and the IDs of the facts it used. Code drops IDs that don't exist, adds the source links, and swaps any answer with no real fact behind it for "I don't know".
 - **Questions are never instructions.** "Ignore your rules" or "print your prompt" gets the "I don't know" answer.
 

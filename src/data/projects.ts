@@ -18,6 +18,21 @@ const repo = "https://github.com/juddg-commits/year-of-ai/tree/main/apps";
 
 export const aiProjects: Project[] = [
   {
+    slug: "lead-router",
+    title: "Lead router on Palantir Foundry",
+    when: "Oct 2026",
+    stack: "Ontology · AIP Logic · AIP Evals · Workshop · TypeScript · Claude",
+    summary:
+      "A lead router for a made-up plumbing and heating shop. A classifier labels each lead by category, urgency and safety hazard, a drafting step writes a reply from the shop's own records, and every draft waits in a queue for a person to approve, edit or reject. The data is fictional, and nothing is sent.",
+    results: [
+      { label: "Calls with every field right, run 3 → run 5", value: "79 → 99 of 168" },
+      { label: "Blind safety leads, classifier calls right", value: "72 / 72" },
+      { label: "Real hazards my SQL rule caught on those leads", value: "6 / 12" },
+      { label: "False safety openings, runs 1 to 5 → run 6", value: "15 → 0" },
+    ],
+    links: [],
+  },
+  {
     slug: "coach",
     title: "Coach",
     when: "Aug to Sept 2026",
@@ -53,6 +68,20 @@ export const aiProjects: Project[] = [
     links: [{ label: "Code", href: `${repo}/research-agent` }],
   },
   {
+    title: "Code fixer",
+    when: "Oct 2026",
+    stack: "Python · Claude API · Docker",
+    summary:
+      "Point it at a small Python repo whose tests fail. It copies the repo, runs the tests in a locked-down container, lets Claude find and fix the bug with five tools, and checks the result in a fresh container. It never edits your repo: you get a patch to review and a trace of every step.",
+    results: [
+      { label: "Held-out bugs fixed, run once (Oct 2), re-graded Oct 5", value: "9 / 10" },
+      { label: "Cost per fix, held-out run", value: "$0.078" },
+      { label: "Time per fix, held-out run", value: "43 s" },
+      { label: "Eval cases, each verified before it counts", value: "29" },
+    ],
+    links: [{ label: "Code", href: `${repo}/code-fixer` }],
+  },
+  {
     slug: "agent-fleet",
     title: "Agent fleet",
     when: "Sept 2026",
@@ -83,7 +112,7 @@ export const aiProjects: Project[] = [
 export const dataProjects: Project[] = [
   {
     title: "Fuel price volatility",
-    when: "Data project",
+    when: "Apr 2026",
     stack: "Python · pandas · EIA data",
     summary:
       "30+ years of weekly U.S. gasoline and diesel prices (26,000+ observations): how volatile they are, how regional prices drift apart, and which shocks drove the biggest swings. A rolling 12-week window, because shorter windows tracked the seasons and longer ones flattened the 2022 shock.",
@@ -91,7 +120,7 @@ export const dataProjects: Project[] = [
   },
   {
     title: "Movie ratings",
-    when: "Data project",
+    when: "Dec 2025",
     stack: "Python · APIs · SQLite",
     summary:
       "A pipeline that pulls film data from the TMDb and OMDb APIs into SQLite, then compares how the two rate each genre. They disagree most on war films (TMDb rates them 1.63 points higher) and almost agree on dramas (0.09 apart).",

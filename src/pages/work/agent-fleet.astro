@@ -44,6 +44,7 @@ const steps = [
         <tbody>
           <tr><td><code>research</code></td><td>Runs the <a href="/work/research-agent/">research agent</a>: a brief where every sentence cites its source. Cost and time measured on a two-part question with the shipped code (run of Sep 28).</td><td class="n">$0.37, 7.5 min</td></tr>
           <tr><td><code>recent_research</code></td><td>Lists past briefs, so a caller can reuse one instead of paying again.</td><td class="n">Free</td></tr>
+          <tr><td><code>fix_code</code></td><td>Runs the code fixer: a Python repo with failing tests in, a patch checked in a fresh sandbox out. It never edits the repo. About $0.06 a fix on its dev eval, and the server caps a fix at $0.50.</td><td class="n">~$0.06</td></tr>
         </tbody>
       </table>
 
@@ -71,6 +72,6 @@ const steps = [
 
     </StudyBody>
 
-    <NextStudy href="/work/research-agent/" title="Research agent" text="The first agent in the fleet: a brief where every sentence cites its source." />
+    <NextStudy href="/work/lead-router/" title="Lead router on Palantir Foundry" text="Drafted replies for a made-up plumbing shop, with a person approving every one." />
   </div>
 </Base>

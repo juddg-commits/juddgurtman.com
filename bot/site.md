@@ -5,7 +5,7 @@ The text of every page on juddgurtman.com, as visitors see it. Use it like the f
 ### P1 | https://juddgurtman.com/ | Home
 
 I check what a number is actually counting before I trust it.
-I study Information Analysis at the University of Michigan. This year I've built a full-stack AI fitness app, a research agent that cites every sentence, and the assistant on this site, and I publish what broke and the measured numbers behind every claim.
+I study Information Analysis at the University of Michigan. In summer 2026 I audited dashboards and call data as an analytics intern. This year I've built a lead router on Palantir Foundry, a research agent that cites every sentence and a code fixer that has to prove its fix. I publish what broke and the measured numbers behind every claim.
 - Resume
 - LinkedIn
 - GitHub
@@ -17,6 +17,14 @@ Last role: Data Analytics Intern, TrueSource
 Looking for: Full-time data and AI roles from 2027, open to relocating
 Selected work
 All work →
+Oct 2026 Ontology · AIP Logic · AIP Evals · Workshop · TypeScript · Claude
+Lead router on Palantir Foundry
+A lead router for a made-up plumbing and heating shop. A classifier labels each lead by category, urgency and safety hazard, a drafting step writes a reply from the shop's own records, and every draft waits in a queue for a person to approve, edit or reject. The data is fictional, and nothing is sent.
+Read the case study →
+Calls with every field right, run 3 → run 5: 79 → 99 of 168
+Blind safety leads, classifier calls right: 72 / 72
+Real hazards my SQL rule caught on those leads: 6 / 12
+False safety openings, runs 1 to 5 → run 6: 15 → 0
 Aug to Sept 2026 Python · FastAPI · Claude API · installable web app
 Coach
 A full-stack AI fitness app. You talk to it like a trainer and it acts: an agent logs workouts, meals and weigh-ins through 7 tools and writes each day's session from the weights you actually lifted. Under it: a FastAPI backend, a phone app you can install, and a simulator that runs a fake user through ten days to test every change.
@@ -36,6 +44,14 @@ Weakly supported claims, saved replay: 66% → 54%
 Sentences with a citation, tuned run: 45 / 46
 Invented sources, every saved run: 0
 Cost per question, first → tuned run: $1.68 → $1.25
+Oct 2026 Python · Claude API · Docker
+Code fixer
+Point it at a small Python repo whose tests fail. It copies the repo, runs the tests in a locked-down container, lets Claude find and fix the bug with five tools, and checks the result in a fresh container. It never edits your repo: you get a patch to review and a trace of every step.
+Code ↗
+Held-out bugs fixed, run once (Oct 2), re-graded Oct 5: 9 / 10
+Cost per fix, held-out run: $0.078
+Time per fix, held-out run: 43 s
+Eval cases, each verified before it counts: 29
 Sept 2026 Python · MCP · orchestration
 Agent fleet
 One orchestrator runs my other agents as tools through an MCP server. Anything that spends money has a cap and waits for a person to approve it, and a stuck job gets shut down so it stops costing money.
@@ -60,6 +76,14 @@ A research agent that cites every sentence Sept 2026 What broke, starting with z
 Work
 The Year of AI is one project at a time, shipped in public, each with a write-up of what broke. Every number below came from a measured run, and each case study says which one.
 AI projects
+Oct 2026 Ontology · AIP Logic · AIP Evals · Workshop · TypeScript · Claude
+Lead router on Palantir Foundry
+A lead router for a made-up plumbing and heating shop. A classifier labels each lead by category, urgency and safety hazard, a drafting step writes a reply from the shop's own records, and every draft waits in a queue for a person to approve, edit or reject. The data is fictional, and nothing is sent.
+Read the case study →
+Calls with every field right, run 3 → run 5: 79 → 99 of 168
+Blind safety leads, classifier calls right: 72 / 72
+Real hazards my SQL rule caught on those leads: 6 / 12
+False safety openings, runs 1 to 5 → run 6: 15 → 0
 Aug to Sept 2026 Python · FastAPI · Claude API · installable web app
 Coach
 A full-stack AI fitness app. You talk to it like a trainer and it acts: an agent logs workouts, meals and weigh-ins through 7 tools and writes each day's session from the weights you actually lifted. Under it: a FastAPI backend, a phone app you can install, and a simulator that runs a fake user through ten days to test every change.
@@ -79,6 +103,14 @@ Weakly supported claims, saved replay: 66% → 54%
 Sentences with a citation, tuned run: 45 / 46
 Invented sources, every saved run: 0
 Cost per question, first → tuned run: $1.68 → $1.25
+Oct 2026 Python · Claude API · Docker
+Code fixer
+Point it at a small Python repo whose tests fail. It copies the repo, runs the tests in a locked-down container, lets Claude find and fix the bug with five tools, and checks the result in a fresh container. It never edits your repo: you get a patch to review and a trace of every step.
+Code ↗
+Held-out bugs fixed, run once (Oct 2), re-graded Oct 5: 9 / 10
+Cost per fix, held-out run: $0.078
+Time per fix, held-out run: 43 s
+Eval cases, each verified before it counts: 29
 Sept 2026 Python · MCP · orchestration
 Agent fleet
 One orchestrator runs my other agents as tools through an MCP server. Anything that spends money has a cap and waits for a person to approve it, and a stuck job gets shut down so it stops costing money.
@@ -92,18 +124,18 @@ Try it → Code ↗
 Eval questions passed, run of Oct 4: 100 / 100
 Questions per visitor per minute: 6
 Data projects
-Data project Python · pandas · EIA data
+Apr 2026 Python · pandas · EIA data
 Fuel price volatility
 30+ years of weekly U.S. gasoline and diesel prices (26,000+ observations): how volatile they are, how regional prices drift apart, and which shocks drove the biggest swings. A rolling 12-week window, because shorter windows tracked the seasons and longer ones flattened the 2022 shock.
 Code ↗
-Data project Python · APIs · SQLite
+Dec 2025 Python · APIs · SQLite
 Movie ratings
 A pipeline that pulls film data from the TMDb and OMDb APIs into SQLite, then compares how the two rate each genre. They disagree most on war films (TMDb rates them 1.63 points higher) and almost agree on dramas (0.09 apart).
 Code ↗
 For fun
 [Image: Clout Royale home base: a pixel-art mansion with upgrade stations]
 [Image: Clout Royale mission: a top-down arena fight against parody creator characters]
-TypeScript · Phaser 3
+Sept 2026 · TypeScript · Phaser 3
 Clout Royale
 A satirical top-down arena game about the creator economy. You play a gym influencer defending your mansion from waves of parody creators. Eliminations earn clout, your Aura meter powers your abilities, and your Cringe meter slows you down when you overdo it.
 Play it in your browser (keyboard needed) ↗ Code ↗
@@ -287,6 +319,7 @@ The tools so far
 Tool · What it does · Cost
 research · Runs the research agent: a brief where every sentence cites its source. Cost and time measured on a two-part question with the shipped code (run of Sep 28). · $0.37, 7.5 min
 recent_research · Lists past briefs, so a caller can reuse one instead of paying again. · Free
+fix_code · Runs the code fixer: a Python repo with failing tests in, a patch checked in a fresh sandbox out. It never edits the repo. About $0.06 a fix on its dev eval, and the server caps a fix at $0.50. · ~$0.06
 Guarding the money
 - Caps a caller can't raise. A research call can ask for at most 4 sub-questions with 3 searches each. It can ask for less, never more.
 - A person in the loop. Paid tools aren't pre-approved, so the orchestrator has to ask before it spends.
@@ -300,7 +333,7 @@ What's next
 A front door that sends every request to the right agent and checks my rules on privacy and cost before anything runs, and more agents behind it.
 How I built it
 I built it with Claude Code as my pair programmer, and the orchestrator itself runs in Claude Code.
-Next case study Research agent → The first agent in the fleet: a brief where every sentence cites its source.
+Next case study Lead router on Palantir Foundry → Drafted replies for a made-up plumbing shop, with a person approving every one.
 
 ### P6 | https://juddgurtman.com/experience/ | Experience
 
@@ -350,7 +383,7 @@ Every build ships with a write-up of what broke and design notes on why it works
 About
 I'm a senior at the University of Michigan studying Information Analysis, graduating in May 2027. I like the part of analytics where the data is messier than the dashboard suggests, and I've spent this year learning to build AI that holds up there.
 My working rule: I check what a number is actually counting before I trust it. It came from an internship where my first, alarming estimate turned out to be counting routing that worked as designed. I ask "why" a lot, too: "What's the point of using fake data?" changed what I built next. Sports made me competitive.
-Why AI? In August 2026 I wrote down, "I want to build something real so I can learn and understand AI." That became my Year of AI: one project at a time, shipped in public. I learn fast and I'm ambitious: I'm not a computer science major, and in August and September 2026 I built Coach, the research agent and the agent fleet, each with its own tests and measured results. Some projects start from plain curiosity. The fuel-price one began after I watched Landman, and I built Clout Royale because I've been a gamer my whole life.
+Why AI? In August 2026 I wrote down, "I want to build something real so I can learn and understand AI." That became my Year of AI: one project at a time, shipped in public. I learn fast and I'm ambitious: I'm not a computer science major, and since August 2026 I've built Coach, the research agent, the agent fleet, a code fixer and a lead router on Palantir Foundry, each with its own tests and measured results. Some projects start from plain curiosity. The fuel-price one began after I watched Landman, and I built Clout Royale because I've been a gamer my whole life.
 Outside of class I coach youth flag football, which I've done as a volunteer since January 2024, and in spring 2026 I was an assistant coach for the Aspen High School varsity lacrosse team. I'm an elite skier, raised on Aspen's mountains. I follow sports analytics a little too closely and love to cook. I lift, and I built Coach partly for my own training. I'm into house music, and this fall I'm taking an electronic music production class to learn to make it. And I can solve a Rubik's cube in about 30 seconds.
 [Image: Judd Gurtman]
 How I work
@@ -378,39 +411,117 @@ Resume
 - Email
 Judd Gurtman
 Ann Arbor, MI judd@juddgurtman.com juddgurtman.com linkedin.com/in/judd-gurtman-208769235 github.com/juddg-commits
-Information Analysis senior (May 2027) who builds and evaluates LLM agents, and checks what the numbers are actually counting.
+Information Analysis senior (May 2027) who checks what a number is actually counting, then builds and tests the fix.
 Education
 University of Michigan, School of Information · B.S. Information, Information Analysis Expected May 2027
 Coursework: Data-Oriented Programming (Python, SQL), Statistics and Data Analysis, Information Ethics; this fall: Data Manipulation, Data Exploration, User Modeling, client capstone.
 Online courses completed: Google Data Analytics (Coursera); Analyzing and Visualizing Data with Power BI (DavidsonX, edX).
-AI projects, built with Claude Code github.com/juddg-commits/year-of-ai
-Coach: full-stack AI fitness app · Python, FastAPI, Claude API Aug to Sep 2026
-- Built a FastAPI backend (19 routes), an installable phone front end and a Claude agent that acts through 7 tools: it logs workouts, meals and weigh-ins and writes each day's session from logged lifts.
-- Scored the agent with a 10-day simulated user (fake clock, spending cap) and 13 automated checks: 7/13 on the first run, 13/13 in 3 of the last 5. 37 offline tests.
-- Cut full-price input tokens 96% with a cache-first prompt; the ten-day test fell from $2.07 (run 1) to $1.35 (run 16).
-Research agent: cited research briefs · Python, Claude API, web search Sep 2026
-- Answers open questions with a brief: researches the parts in parallel, checks every claim against its source quote, and cites nearly every sentence (45 of 46 on the tuned run; 0 invented sources in any run).
-- Counted causes before fixing: in three runs, 76 to 88% of weak claims came from quotes cut off at 150 characters; recovering full sentences cut them from 66% to 54% in a saved replay.
-- Cut cost per question from $1.68 to $1.25 and runtime from 6m40s to 2m29s (first vs. tuned run) with a per-stage ledger.
-Agent fleet · Python, MCP Sep 2026
-- Built an MCP server that gives an orchestrator my research agent as a tool, with spending caps and approval before paid runs.
 Experience
 TrueSource, an OnPoint Group company · Data Analytics Intern, remote Jun to Jul 2026
-- Audited 29 KPIs across 4 dashboards (31 tabs), traced 7 inconsistencies to formulas and date filters, and made 8 consolidation recommendations; the team added disclaimers to the live dashboards and flagged one for a rebuild.
 - Took my first failure-rate estimate to the process owner and re-cut outcomes into 4 categories (handled correctly, intended routing, caller error, true system error); the real rate was far lower, matching the team's.
-- Found why the data was hard to read: many call records had no linked Salesforce work order; classified calls by reason with AI and proposed a first-contact resolution metric.
-- Validated a Power BI model against Salesforce: sample-tested 10 records, then compared full populations across 2 tables; after my manager's review, changed my verdict and documented what my first check missed.
 - Gave five presentations in six weeks, the last one to company leadership.
-Jay's Valet, Aspen · Valet lead, running shifts (part-time) 2022 to present
+- Audited 29 KPIs across 4 dashboards (31 tabs), traced 7 inconsistencies to formulas and date filters, and made 8 consolidation recommendations; the team added disclaimers to the live dashboards and flagged one for a rebuild.
+- Validated a Power BI model against Salesforce: sample-tested 10 records, then compared full populations across 2 tables; after my manager's review, changed my verdict and documented what my first check missed.
+- Found why the data was hard to read: many call records had no linked Salesforce work order; classified calls by reason with AI and proposed a first-contact resolution metric.
+Jay's Valet, Aspen · Valet lead (part-time) 2022 to present
+- Run shifts that range from 2 or 3 valets to more than 10, depending on the event.
 Bosq, Aspen (Michelin-starred restaurant) · Food runner and server support Summer 2025
-Labor for a Neighbor, Aspen · Founder: window washing, yard work and hauling for neighbors Summer 2024
-Other projects
-- Judd Bot (JavaScript, Cloudflare Workers, Claude API): The voice and text assistant on juddgurtman.com. It answers only from a public fact list, cites sources, and passed 100 of 100 questions in its Oct 4 code-graded eval, including prompt-injection attempts.
-- Fuel price volatility (Python, pandas): 26,000+ weekly EIA prices; the West Coast's gap to the U.S. average varies over 2x the Gulf Coast's.
-- Movie ratings (Python, APIs, SQLite): TMDb rates action and horror 0.7 to 0.8 points above OMDb; on drama they agree within 0.1.
+Labor for a Neighbor, Aspen · Founder Summer 2024
+- Started and ran a window washing, yard work and hauling service: 20 to 40 customers in one summer with a crew of 3 to 5.
+Projects
+Lead router on Palantir Foundry · Ontology, AIP Logic, AIP Evals, Workshop, TypeScript, Claude Oct 2026
+- Built a lead router for a sample plumbing business: it classifies each lead, drafts a reply from customer, price and schedule records, and queues it for a person to approve, edit or reject. The classifier names the hazard, and code writes the safety steps.
+- Tested my SQL safety rule on blind leads written by a separate session: it caught 6 of 12 real hazards while the classifier got all 72 calls right, so I made the rule flag-only. No safety lead has missed its safety opening on any run.
+- Scored prompts v2 to v4 on the final key and one judge wording: calls with every field right rose from 79 to 99 of 168.
+Research agent: cited research briefs · Python, Claude API, web search Sep 2026
+- Counted causes before fixing: in three runs, 76 to 88% of weak claims came from quotes cut off at 150 characters; recovering full sentences cut them from 66% to 54% in a saved replay.
+Coach: full-stack fitness app · Python, FastAPI, Claude API Aug to Sep 2026
+- Built a FastAPI backend (19 routes), an installable phone front end and a Claude agent that acts through 7 tools: it logs workouts, meals and weigh-ins and writes each day's session from logged lifts.
+Fuel price volatility · Python, pandas Apr 2026
+- Compared 26,000+ weekly EIA fuel prices across regions: the West Coast's gap to the U.S. average varies over 2x the Gulf Coast's.
+Movie ratings · Python, APIs, SQLite Dec 2025
+- Compared how two sources rate each film genre: TMDb rates action and horror 0.7 to 0.8 points above OMDb, and on drama they agree within 0.1.
 Leadership
 Michigan Youth Sports Initiative: volunteer youth flag football coach, team of about 15, since 2024 · Aspen High School: assistant varsity lacrosse coach, roster of about 30, spring 2026
 Skills
-AI: Claude API (tool use, structured outputs, prompt caching), MCP, multi-agent orchestration, LLM evaluation, Claude Code
 Code and data: Python (pandas, NumPy, matplotlib), SQL, JavaScript, TypeScript, FastAPI, REST APIs, Git, GitHub Actions, Cloudflare Workers, Power BI (model validation), Salesforce, Excel
+AI: Claude API (tool use, structured outputs, prompt caching), MCP, multi-agent orchestration, LLM evaluation, Claude Code
 Interests: Skiing, sports analytics, lacrosse, house music
+
+### P10 | https://juddgurtman.com/work/lead-router/ | Lead router case study
+
+← All work
+Lead router on Palantir Foundry
+A small plumbing and heating shop gets leads at all hours, and some of them are emergencies. I built a lead router for a made-up shop: it labels each lead, drafts a reply from the shop's own records, and holds every draft in a queue for a person. The data is fictional, and nothing is sent.
+Built: October 2026
+Stack: Ontology, AIP Logic, AIP Evals, Workshop, TypeScript, Claude
+Tested by: 56 test leads, drafted 3 times each (168 calls a run), 6 scored runs
+Data: Fictional. Nothing is sent.
+Built with: Claude Code as my pair programmer
+[Image: The review queue in Workshop: leads sorted with safety leads first, a no-heat message from a customer with a 6-month-old, and a draft reply that opens with safety steps above Approve, Edit and Reject buttons]
+The review queue. Safety leads sort to the top. This one is a no-heat call with a 6-month-old in the house. Code puts the safety steps at the top of the reply, and a person approves, edits or rejects it.
+[Image: A spam lead offering search rankings, with a draft whose reply is NO_REPLY and whose status is pending]
+Spam. The draft is NO_REPLY. Approve and Edit are blocked for it, so it can only be rejected.
+[Image: The Ontology's seven object types with their counts: Opening 38, Customer 30, Decision 1, Draft 4, Job 95, Service 27 and Lead 56]
+The Ontology. Seven object types: Lead, Customer, Job, Service, Opening, Draft and Decision. 56 leads, 30 customers and 95 past jobs.
+[Image: The evaluation suite's list of runs from October 11 to October 26, each with 168 test cases and an average duration of 8 to 10 seconds]
+Scored runs. Each run drafts every lead three times, 168 calls, so I can see what a prompt change did.
+What it is
+A slow reply loses the job, because people call the next company on the list. So I built a lead router for a made-up shop on Palantir's AIP Developer Tier. A classifier in AIP Logic labels each lead by category, urgency and safety hazard. Then a drafting step writes a reply from the shop's own records: customers, past jobs, prices and open appointment windows. Every draft lands in a Workshop queue, where a person approves, edits or rejects it.
+Code decides which leads are red, puts the safety instructions at the top of a reply, and checks every fact in a draft before a person sees it.
+- 01 A lead arrives Fictional data
+A message to the shop, at any hour. Some are emergencies and some are spam.
+- 02 Safety floor A SQL rule, no model
+Reads the subject, the message and the outdoor temperature and flags gas, carbon monoxide, flooding or no heat. A hit makes the lead red and sends it to a person.
+- 03 Classify Claude Sonnet 5.5, in AIP Logic
+Labels the lead by category, urgency and safety hazard.
+- 04 Draft TypeScript functions and one model call
+Code gathers the shop's records for this customer (past jobs, prices, open appointment windows) and builds the prompt. The model writes the reply.
+- 05 Check Code
+Puts the safety instructions at the top of a safety reply and checks every fact in the draft before a person sees it.
+- 06 Review A person, in a Workshop queue
+Approves, edits or rejects. A spam draft can only be rejected, and an edit to a safety reply has to keep the full safety opening.
+The results
+Every run drafts the 56 test leads 3 times, 168 calls. The runs are numbered 1 to 6, from October 9 to October 26, 2026.
+What · Before · After · Measured on
+Calls with every field right · 79 of 168 · 99 of 168 · Run 3 (Oct 12, prompt v2) vs. run 5 (Oct 26, prompt v4), on the final key and one judge wording
+Calls with a false safety opening · 15 · 0 · Every run from 1 to 5 vs. run 6 (Oct 26), the first after the safety rule became flag-only
+Safety-lead calls that got their opening · · 48 of 48 · Run 6
+Blind safety leads: the classifier · · 72 of 72 · 24 leads written by a separate session, 3 calls each (Oct 26)
+Blind safety leads: my SQL rule · · 6 of 12 · The real hazards among those 24 leads. It also left 7 of the 12 lookalikes alone
+Time to draft · · about 9 s · The median per eval call in run 6. The 90th percentile was 13 seconds
+How it's tested
+Scoring runs in AIP Evals. Code grades two things: whether the draft matched the right customer, and whether it cited exactly the records it should. An LLM judge from a different model family grades what the reply says and what it avoids. My own script re-scores every exported run, and it has never disagreed with the platform on the code-graded fields.
+The judge is noisier. In run 6 it failed one lead (L025) on all 3 calls for not saying the price covered sink drains, though the reply quoted the listed price.
+The drafting rules started as Python on my laptop and became TypeScript functions on Foundry, with the prompt inside that code. A parity test checks that the TypeScript builds the exact same prompt as the Python, byte for byte. It matches on 144 of 144 prompts.
+The classifier, v1 to v2
+I froze v1's prompt before it saw a lead. On the first 40 leads, it got all three labels right on every run for 32 of them. Safety was 120 of 120 calls, and urgency was the weakest at 107 of 120. I wrote v2 after seeing v1's misses, so its perfect score on those 40 is a training score and I don't count it.
+On 8 held-out leads, v1 got 3 right on every run and v2 got all 8. The catch is that those 8 were written from the rules v2 encodes. The miss I remember is a chirping carbon monoxide detector that v1 called a question with no urgency, on all 3 runs. On 8 later safety leads, written by a fresh Claude session that hadn't seen any prompt or result, v2 got all 24 calls right.
+Keeping the test honest
+From the second draft prompt on, a fresh Claude session wrote each prompt from a short brief, without seeing the results or the answer key. The held-out leads came from sessions like that too, and so did anything else that could be tuned to the test.
+The answer key changed four times. Every old key stays byte for byte as it was, so I can re-score any old run exactly, and the answers live only in the keys and the eval suites, never anywhere a function can read.
+Four draft prompts
+Facts are the cleanest trend, because code grades them. Calls that cited exactly the records in the key went from 41 of 144 on v1 (run 1) to 102, 102, 123, 122 and 115 of 168 in runs 2 to 6. I reworded the judge's rubric at run 3, so its scores only compare within runs 1 and 2 and within runs 3 to 6. From run 3 on, calls with every field right went 79, 99, 99 and 98 of 168.
+Each prompt answered the run before it.
+- v1 was the baseline for run 1.
+- v2 moved the "marked urgent" line into code. Replies cite the customer's own record, give price ranges and past jobs, offer windows only for a visit, and ask new senders for a phone number.
+- v3 tells a safety customer with a booked job not to wait for it, and a quote offers the free estimate, with no appointment windows unless the customer asks for them.
+- v4 treats a customer asking "when" as wanting a visit, names the booked job, and gives a past job its date.
+I stopped after run 5, when v4 matched v3 at 99 of 168 calls with every field right, and wrote the leftover misses down as known limits instead of writing a fifth prompt.
+The safety floor
+The safety floor is a SQL rule with no model in it. It reads a lead's subject, message and the outdoor temperature and flags gas, carbon monoxide, flooding or no heat. At first a floor hit also chose the safety opening a draft starts with. On the 56 leads it was right on 50, with 5 false flags and 1 miss.
+Those 5 false flags put a safety opening on 15 calls in every run from 1 to 5. For most of the project my notes blamed the classifier for them. They were the floor's.
+Then I had a separate Claude session write 24 test leads for the floor, 12 real hazards and 12 lookalikes. Nobody has read their messages. The floor caught 6 of the 12 hazards and left 7 of the 12 lookalikes alone. The classifier got all 72 calls right.
+So the floor only raises a flag now. A hit still makes the lead red and sends it to a person, but the opening comes from the classifier. Run 6 was the first with that change. It had no false openings, all 48 calls on safety leads got their opening, and the judge's score for what a reply avoids went from 140 to 153 of 156.
+The Edit action had the same kind of hole. Its check only looked at the opening's first words, and in my test it let through all 16 cut openings and all 48 swapped ones. Now it matches the hazard's full opening and gets 144 of 144 test cases right.
+Known limits
+- On two leads (L019 and L052) the key and the prompt disagree, and I left both as they are.
+- Two others (L034 and L055) drop the customer's past job on every call.
+- The judge misread 5 calls in run 6, so a difference of a few calls between runs doesn't mean much. One run can't tell me whether the facts dip in run 6, from 122 to 115, came from the floor change.
+- Nothing is sent, and there's one approval so far, so I have no approval or edit rates.
+- The held-out sets are small: 8 leads, then 8 safety leads.
+What's next
+The next fix is a better floor, because the classifier has matched the key on every label I've measured since v2. A second version of the floor gets all 56 right on the leads it was written from, but only 8 of 12 hazards and 9 of 12 lookalikes on the blind set. I want a bigger blind set before I trust it. After that comes sending, behind the same approval step, and letting my orchestrator agent call the approval actions.
+How I built it
+Built with help from LLMs, mostly Claude. Claude Code did most of the typing on my laptop, and Claude in the desktop app drove the browser on Foundry. I decided what to build, how to test it, and what counts.
+Next case study Research agent → A brief where every sentence cites its source.

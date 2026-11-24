@@ -23,6 +23,7 @@ Judd Bot answers questions about Judd Gurtman on juddgurtman.com from this file 
 | /work/research-agent/ | Research agent | The research agent: how it works, what broke, the numbers |
 | /work/coach/ | Coach | Coach, the full-stack AI fitness app: screenshots, how it's built and how it's tested |
 | /work/agent-fleet/ | Agent fleet | The agent fleet: one orchestrator running his agents as tools |
+| /work/lead-router/ | Lead router | The lead router on Palantir Foundry: screenshots, how it's tested, the safety rule and the numbers |
 | /experience/ | Experience | His internship at TrueSource, his jobs in Aspen, and his coaching |
 | /writing/ | Writing | Write-ups about what broke in each build |
 | /about/ | About | Background, interests and how to reach him |
@@ -44,7 +45,7 @@ Judd Bot answers questions about Judd Gurtman on juddgurtman.com from this file 
 | F10 | He completed two online courses: Google Data Analytics on Coursera, and Analyzing and Visualizing Data with Power BI from DavidsonX on edX. He finished the coursework but doesn't hold paid certificates for them. | https://juddgurtman.com/resume/ |
 | F11 | He's looking for full-time data and AI roles starting in 2027, after he graduates in May. He's open to relocating anywhere in the U.S. and to in-office, hybrid or remote work. | https://juddgurtman.com/about/ |
 | F20 | He's a U.S. citizen and doesn't need visa sponsorship. | https://juddgurtman.com/about/ |
-| F21 | Next he's connecting his agents under one orchestrator agent that runs them as tools, and building an agent that fixes code and proves the fix worked by running the tests. | https://github.com/juddg-commits/year-of-ai/blob/main/apps/research-agent/WRITEUP.md |
+| F21 | Next for his agent fleet: a front door that sends every request to the right agent and checks his rules on privacy and cost before anything runs, and more agents behind it. | https://juddgurtman.com/work/agent-fleet/ |
 | F12 | His skills: Python (pandas, NumPy, matplotlib), SQL, JavaScript, TypeScript, FastAPI, REST APIs, Git and GitHub Actions, Cloudflare Workers, the Claude API (tool use, structured outputs, prompt caching), MCP and multi-agent orchestration, LLM evaluation, Claude Code, Power BI (model validation), Salesforce and Excel. | https://juddgurtman.com/resume/ |
 | F13 | His completed coursework at Michigan includes Data-Oriented Programming (Python and SQL), Statistics and Data Analysis, and Information Ethics. This fall (2026) he's taking Data Manipulation, Data Exploration, User Modeling, and a capstone project with an outside client. | https://juddgurtman.com/resume/ |
 | F14 | Why AI, in his words: "I want to build something real so I can learn and understand AI." He wrote that in August 2026, and it became his Year of AI: one project at a time, shipped in public. | https://juddgurtman.com/about/ |
@@ -52,13 +53,13 @@ Judd Bot answers questions about Judd Gurtman on juddgurtman.com from this file 
 | F16 | He lifts, and he built Coach partly for his own training. | https://juddgurtman.com/about/ |
 | F17 | He can solve a Rubik's cube in about 30 seconds. | https://juddgurtman.com/about/ |
 | F18 | He asks "why" a lot: asking "What's the point of using fake data?" changed what he built next. Sports made him competitive. | https://juddgurtman.com/about/ |
-| F19 | Judd describes himself as a fast learner and ambitious. He isn't a computer science major, and in August and September 2026 he built Coach, the research agent and the agent fleet, each with its own tests and measured results. | https://juddgurtman.com/about/ |
+| F19 | Judd describes himself as a fast learner and ambitious. He isn't a computer science major, and since August 2026 he has built Coach, the research agent, the agent fleet, a code fixer and a lead router on Palantir Foundry, each with its own tests and measured results. | https://juddgurtman.com/about/ |
 
 ## The Year of AI and how he works
 
 | ID | Fact | Source |
 |---|---|---|
-| Y1 | In 2026 Judd started the Year of AI: building AI projects in public, each with a write-up of what broke. Shipped so far: Coach and the research agent (both September 2026), plus the server that runs his agents as a fleet. Plans change as he learns; the shipping log records what actually shipped. | https://github.com/juddg-commits/year-of-ai/blob/main/curriculum/log.md |
+| Y1 | In 2026 Judd started the Year of AI: building AI projects in public, each with a write-up of what broke. Shipped so far: Coach and the research agent (both September 2026), the server that runs his agents as a fleet, and the code fixer (October 2026). Plans change as he learns; the shipping log records what actually shipped. | https://github.com/juddg-commits/year-of-ai/blob/main/curriculum/log.md |
 | Y2 | He builds his AI projects with Claude Code as his pair programmer. It writes most of the code; Judd picks what to build, tests it on real questions, and decides which problems are worth fixing. | https://github.com/juddg-commits/year-of-ai/blob/main/apps/research-agent/WRITEUP.md |
 | Y3 | Measure before fixing: his research agent's obvious fix was aimed at the wrong cause, and counting first showed the real one. | https://juddgurtman.com/about/ |
 | Y4 | Only claim what he measured: every AI result on his site traces back to a run, a trace file or a controlled replay. | https://juddgurtman.com/about/ |
@@ -90,6 +91,29 @@ Judd Bot answers questions about Judd Gurtman on juddgurtman.com from this file 
 | ID | Fact | Source |
 |---|---|---|
 | A1 | One orchestrator agent runs his other agents as tools, through an MCP server. Anything that spends money has a cap and waits for a person to approve it, and a stuck job gets shut down so it stops costing money. | https://juddgurtman.com/work/agent-fleet/ |
+| A2 | The fleet's fix_code tool runs the code fixer: a Python repo with failing tests in, a patch checked in a fresh sandbox out. The server caps a fix at $0.50. | https://juddgurtman.com/work/agent-fleet/ |
+
+**Lead router on Palantir Foundry** (https://juddgurtman.com/work/lead-router/)
+
+| ID | Fact | Source |
+|---|---|---|
+| B1 | In October 2026 Judd built a lead router for a made-up plumbing and heating shop on Palantir Foundry, with the Ontology, AIP Logic, AIP Evals, Workshop and TypeScript functions. A classifier labels each lead by category, urgency and safety hazard, a drafting step writes a reply from the shop's own records, and a person approves, edits or rejects every draft. The data is fictional, and nothing is sent. | https://juddgurtman.com/work/lead-router/ |
+| B2 | Each scored run of the lead router drafts 56 test leads 3 times, 168 calls. Calls with every field right went from 79 of 168 in run 3 (prompt v2, October 12, 2026) to 99 of 168 in run 5 (prompt v4, October 26). | https://juddgurtman.com/work/lead-router/ |
+| B3 | He tested the lead router's SQL safety rule on 24 blind leads written by a separate session. The rule caught 6 of the 12 real hazards, and the classifier got all 72 calls right. So the rule only flags a lead for a person now. | https://juddgurtman.com/work/lead-router/ |
+| B4 | For most of the lead router project his notes blamed the classifier for 5 false safety flags, which put a safety opening on 15 calls in every run from 1 to 5. They came from his own SQL rule. Run 6 (October 26, 2026), the first after the rule became flag-only, had no false openings, and all 48 calls on safety leads got their opening. | https://juddgurtman.com/work/lead-router/ |
+| B5 | The lead router's known limits: nothing is sent, there is one approval so far, and the held-out sets are small (8 leads, then 8 safety leads). The LLM judge misread 5 calls in run 6, so a difference of a few calls between runs doesn't mean much. | https://juddgurtman.com/work/lead-router/ |
+| B6 | Next for the lead router: a better safety rule tested on a bigger blind set, then sending behind the same approval step. | https://juddgurtman.com/work/lead-router/ |
+| B7 | How he built the lead router: Claude Code did most of the typing on his laptop, and Claude in the desktop app drove the browser on Foundry. Judd decided what to build, how to test it, and what counts. | https://juddgurtman.com/work/lead-router/ |
+
+**Code fixer** (https://github.com/juddg-commits/year-of-ai/tree/main/apps/code-fixer)
+
+| ID | Fact | Source |
+|---|---|---|
+| K1 | The code fixer takes a small Python repo whose tests fail. It copies the repo, runs the tests in a locked-down container, lets Claude find and fix the bug with five tools, and checks the result in a fresh container. It never edits the repo: you get a patch to review and a trace of every step. | https://github.com/juddg-commits/year-of-ai/blob/main/apps/code-fixer/README.md |
+| K2 | On its held-out set the code fixer fixed 9 of 10 bugs, at $0.078 and 43 seconds a fix. It's a small sample: 10 cases, run once (October 2, 2026). The score is a re-grade from October 5: it scored 10 of 10 by the tests the cases had, then Judd added hidden tests and one patch failed them. | https://github.com/juddg-commits/year-of-ai/blob/main/apps/code-fixer/README.md |
+| K3 | He hand-checked the six real-bug patches from the held-out run against upstream's fixes on random inputs. Five behaved the same in every trial, and one (lark-1641) didn't. | https://github.com/juddg-commits/year-of-ai/blob/main/apps/code-fixer/README.md |
+| K4 | The code fixer's limits live in code: every test runs in a fresh container with no network, test files are read-only, a fix gets $0.50 by default, and whether it's fixed is decided by a fresh sandbox run, never by the model's word. | https://github.com/juddg-commits/year-of-ai/blob/main/apps/code-fixer/README.md |
+| K5 | The code fixer's eval has 29 cases (19 to tune on, 10 held out), each verified before it counts: without the bug every test passes, and with it at least one visible test fails. It only handles small Python repos with pytest tests. | https://github.com/juddg-commits/year-of-ai/blob/main/apps/code-fixer/README.md |
 
 **Coach** (https://github.com/juddg-commits/year-of-ai/tree/main/apps/health-coach)
 
